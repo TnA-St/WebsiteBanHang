@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cửa Hàng Laptop</title>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/product-filter.css" rel="stylesheet"/></head>
+<body>
+<header class="navbar">
+<div class="logo">
+<div class="logo-box">💻</div>
+</div>
+<nav class="menu-chinh">
+<a href="trangchu.html">Trang chủ</a>
+<a href="gioithieu.html">Giới thiệu</a>
+<a href="phukien.html">Phụ kiện Điện Thoại</a>
+<a href="dienthoai.html">Điện thoại</a>
+<a class="active" href="laptop.html">LapTop</a>
+<a href="phukienmaytinh.html">Phụ kiện Máy tính</a>
+<a class="btn-orange" href="Dangnhap.html">Đăng nhập</a>
+<a class="btn-blue" href="DangKy.html">Đăng ký</a>
+</nav>
+</header>
+<div class="main-container">
+<aside class="sidebar" id="productFilterSidebar">
+<div class="filter-group">
+<div class="filter-title-row">
+<h3>Bộ lọc đã chọn</h3>
+<span class="filter-count-badge" id="activeFilterCount">0</span>
+</div>
+<div class="tags-container selected-filter-tags" id="selectedFilterTags">
+<span class="filter-empty-tag">Chưa chọn bộ lọc</span>
+</div>
+</div>
+<div class="filter-group">
+<h3>Thương hiệu</h3>
+<label>
+<input class="sidebar-filter-input" data-label="Apple" name="brands" type="checkbox" value="apple"/>
+                    Apple
+                </label>
+<label>
+<input class="sidebar-filter-input" data-label="Dell" name="brands" type="checkbox" value="dell"/>
+                    Dell
+                </label>
+<label>
+<input class="sidebar-filter-input" data-label="Asus" name="brands" type="checkbox" value="asus"/>
+                    Asus
+                </label>
+</div>
+<div class="filter-group">
+<h3>Dung lượng RAM</h3>
+<label>
+<input class="sidebar-filter-input" data-label="RAM 8GB" name="ram" type="checkbox" value="8"/>
+                    8GB
+                </label>
+<label>
+<input class="sidebar-filter-input" data-label="RAM 16GB" name="ram" type="checkbox" value="16"/>
+                    16GB
+                </label>
+<label>
+<input class="sidebar-filter-input" data-label="RAM 32GB" name="ram" type="checkbox" value="32"/>
+                    32GB
+                </label>
+</div>
+<div class="filter-group">
+<h3>Ổ cứng SSD</h3>
+<label>
+<input class="sidebar-filter-input" data-label="SSD 256GB" name="storage" type="checkbox" value="256"/>
+                    256GB
+                </label>
+<label>
+<input class="sidebar-filter-input" data-label="SSD 512GB" name="storage" type="checkbox" value="512"/>
+                    512GB
+                </label>
+<label>
+<input class="sidebar-filter-input" data-label="SSD 1TB" name="storage" type="checkbox" value="1000"/>
+                    1TB
+                </label>
+</div>
+<div class="filter-group">
+<h3>Nhu cầu sử dụng</h3>
+<label>
+<input class="sidebar-filter-input" data-label="Học tập - văn phòng" name="uses" type="checkbox" value="van-phong"/>
+                    Học tập - văn phòng
+                </label>
+<label>
+<input class="sidebar-filter-input" data-label="Gaming" name="uses" type="checkbox" value="gaming"/>
+                    Gaming
+                </label>
+<label>
+<input class="sidebar-filter-input" data-label="Đồ họa - kỹ thuật" name="uses" type="checkbox" value="do-hoa"/>
+                    Đồ họa - kỹ thuật
+                </label>
+</div>
+<div class="filter-group">
+<h3>Kích thước màn hình</h3>
+<label>
+<input class="sidebar-filter-input" data-label="Màn hình 13 inch" name="screens" type="checkbox" value="13"/>
+                    13 inch
+                </label>
+<label>
+<input class="sidebar-filter-input" data-label="Màn hình 15 inch" name="screens" type="checkbox" value="15"/>
+                    15 inch
+                </label>
+<label>
+<input class="sidebar-filter-input" data-label="Màn hình 16 inch" name="screens" type="checkbox" value="16"/>
+                    16 inch
+                </label>
+</div>
+<div class="filter-group">
+<h3>Giá tiền</h3>
+<div class="price-header functional-price-header">
+<span id="minPriceLabel">0đ</span>
+<span id="maxPriceLabel">40.000.000đ</span>
+</div>
+<div class="dual-range">
+<div class="dual-range-track"></div>
+<div class="dual-range-fill" id="priceRangeFill"></div>
+<input aria-label="Giá thấp nhất" class="price-range-input" id="minPriceRange" max="40000000" min="0" step="100000" type="range" value="0"/>
+<input aria-label="Giá cao nhất" class="price-range-input" id="maxPriceRange" max="40000000" min="0" step="100000" type="range" value="40000000"/>
+</div>
+</div>
+<div class="filter-actions">
+<button class="btn-apply-filter" id="applySidebarFilters" type="button">
+                Áp dụng bộ lọc
+            </button>
+<button class="btn-reset-filter" id="resetSidebarFilters" type="button">
+                Đặt lại
+            </button>
+</div>
+</aside>
+<main class="content-products">
+<div class="top-bar">
+<div class="search-box">
+<input id="searchInput" placeholder="Tìm kiếm laptop" type="text"/>
+<span class="search-icon">🔍</span>
+</div>
+<div class="quick-filters">
+<span class="q-filter active" data-filter="all">✓ Mới nhất</span>
+<span class="q-filter" data-filter="apple">Apple</span>
+<span class="q-filter" data-filter="dell">Dell</span>
+<span class="q-filter" data-filter="asus">Asus</span>
+</div>
+</div><div class="filter-result-bar">
+<p aria-live="polite" id="filterResultText">
+            Hiển thị tất cả sản phẩm
+        </p>
+<button class="clear-all-filters" hidden="" id="clearAllFiltersButton" type="button">
+            Xóa tất cả bộ lọc
+        </button>
+</div>
+<div class="products-grid">
+<div class="product-card" data-brand="apple" data-category="apple" data-price-value="19990000" data-ram="8" data-screen="13" data-storage="256" data-uses="van-phong do-hoa">
+<div class="product-img">
+<img alt="MacBook Air 13 M2" src="img/bac-M2.webp"/>
+</div>
+<h4 class="product-title">MacBook Air 13 M2</h4>
+<p class="product-price">19.990.000đ</p>
+<button class="btn-buy" data-category="laptop" data-description="Thiết kế mỏng nhẹ, chip Apple M2 và màn hình Liquid Retina." data-img="img/bac-M2.webp" data-name="MacBook Air 13 M2" data-price="19.990.000đ" data-subtype="laptop">
+                        Buy
+                    </button>
+</div>
+<div class="product-card" data-brand="apple" data-category="apple" data-price-value="32990000" data-ram="16" data-screen="13" data-storage="512" data-uses="van-phong do-hoa">
+<div class="product-img">
+<img alt="MacBook Air M3 13" src="img/bac-M3.webp"/>
+</div>
+<h4 class="product-title">MacBook Air M3 13</h4>
+<p class="product-price">32.990.000đ</p>
+<button class="btn-buy" data-category="laptop" data-description="Chip Apple M3, hỗ trợ Ray Tracing và kết nối Wi-Fi 6E." data-img="img/bac-M3.webp" data-name="MacBook Air M3 13" data-price="32.990.000đ" data-subtype="laptop">
+                        Buy
+                    </button>
+</div>
+<div class="product-card" data-brand="dell" data-category="dell" data-price-value="20990000" data-ram="16" data-screen="15" data-storage="512" data-uses="van-phong">
+<div class="product-img">
+<img alt="Dell 15 DC15250" src="img/dell-bac-15.webp"/>
+</div>
+<h4 class="product-title">Dell 15 DC15250</h4>
+<p class="product-price">20.990.000đ</p>
+<button class="btn-buy" data-category="laptop" data-description="Thiết kế thanh lịch, cấu hình ổn định và sạc nhanh ExpressCharge." data-img="img/dell-bac-15.webp" data-name="Dell 15 DC15250" data-price="20.990.000đ" data-subtype="laptop">
+                        Buy
+                    </button>
+</div>
+<div class="product-card" data-brand="asus" data-category="asus" data-price-value="21990000" data-ram="16" data-screen="15" data-storage="512" data-uses="gaming do-hoa">
+<div class="product-img">
+<img alt="Asus TUF Gaming" src="img/den-TUF.webp"/>
+</div>
+<h4 class="product-title">Asus TUF Gaming</h4>
+<p class="product-price">21.990.000đ</p>
+<button class="btn-buy" data-category="laptop" data-description="Laptop gaming bền bỉ, card đồ họa RTX và màn hình tần số quét cao." data-img="img/den-TUF.webp" data-name="Asus TUF Gaming" data-price="21.990.000đ" data-subtype="laptop">
+                        Buy
+                    </button>
+</div>
+<div class="product-card" data-brand="dell" data-category="dell" data-price-value="6990000" data-ram="8" data-screen="15" data-storage="256" data-uses="van-phong">
+<div class="product-img">
+<img alt="Dell Inspiron 15 3520" src="img/dell-den15.webp"/>
+</div>
+<h4 class="product-title">Dell Inspiron 15 3520</h4>
+<p class="product-price">6.990.000đ</p>
+<button class="btn-buy" data-category="laptop" data-description="Laptop phổ thông phù hợp học tập, lướt web và giải trí cơ bản." data-img="img/dell-den15.webp" data-name="Dell Inspiron 15 3520" data-price="6.990.000đ" data-subtype="laptop">
+                        Buy
+                    </button>
+</div>
+<div class="product-card" data-brand="asus" data-category="asus" data-price-value="34490001" data-ram="16" data-screen="16" data-storage="512" data-uses="gaming do-hoa">
+<div class="product-img">
+<img alt="Asus Gaming V16" src="img/den-Gv16.webp"/>
+</div>
+<h4 class="product-title">Asus Gaming V16</h4>
+<p class="product-price">34.490.001đ</p>
+<button class="btn-buy" data-category="laptop" data-description="Hiệu năng cao, card đồ họa rời và màn hình 16 inch." data-img="img/den-Gv16.webp" data-name="Asus Gaming V16" data-price="34.490.001đ" data-subtype="laptop">
+                        Buy
+                    </button>
+</div>
+</div><div class="no-filter-results" id="noFilterResults">
+        Không tìm thấy sản phẩm phù hợp với các điều kiện đã chọn.
+    </div>
+</main>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const productCards = Array.from(
+        document.querySelectorAll(".product-card")
+    );
+
+    const buyButtons =
+        document.querySelectorAll(".btn-buy");
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const quickFilters =
+        document.querySelectorAll(".q-filter");
+
+    const sidebarInputs = Array.from(
+        document.querySelectorAll(".sidebar-filter-input")
+    );
+
+    const applyButton =
+        document.getElementById("applySidebarFilters");
+
+    const resetButton =
+        document.getElementById("resetSidebarFilters");
+
+    const clearAllButton =
+        document.getElementById("clearAllFiltersButton");
+
+    const selectedFilterTags =
+        document.getElementById("selectedFilterTags");
+
+    const activeFilterCount =
+        document.getElementById("activeFilterCount");
+
+    const filterResultText =
+        document.getElementById("filterResultText");
+
+    const noFilterResults =
+        document.getElementById("noFilterResults");
+
+    const minPriceRange =
+        document.getElementById("minPriceRange");
+
+    const maxPriceRange =
+        document.getElementById("maxPriceRange");
+
+    const minPriceLabel =
+        document.getElementById("minPriceLabel");
+
+    const maxPriceLabel =
+        document.getElementById("maxPriceLabel");
+
+    const priceRangeFill =
+        document.getElementById("priceRangeFill");
+
+    const DEFAULT_MIN_PRICE = 0;
+    const DEFAULT_MAX_PRICE = 40000000;
+    const MIN_PRICE_GAP = 100000;
+
+    let activeQuickFilter = "all";
+
+    let appliedFilters = {
+        brands: [],
+        ram: [],
+        storage: [],
+        uses: [],
+        screens: [],
+
+        minPrice: DEFAULT_MIN_PRICE,
+        maxPrice: DEFAULT_MAX_PRICE
+    };
+
+    function formatCurrency(value) {
+        return new Intl.NumberFormat("vi-VN").format(value) + "đ";
+    }
+
+    function getCheckedValues(name) {
+        return Array.from(
+            document.querySelectorAll(
+                'input[name="' + name + '"]:checked'
+            )
+        ).map(function (input) {
+            return input.value;
+        });
+    }
+
+    function readSidebarFilters() {
+        return {
+            brands: getCheckedValues("brands"),
+            ram: getCheckedValues("ram"),
+            storage: getCheckedValues("storage"),
+            uses: getCheckedValues("uses"),
+            screens: getCheckedValues("screens"),
+            minPrice: Number(minPriceRange.value),
+            maxPrice: Number(maxPriceRange.value)
+        };
+    }
+
+    function matchesSingleValue(selectedValues, productValue) {
+        if (selectedValues.length === 0) {
+            return true;
+        }
+
+        return selectedValues.includes(productValue);
+    }
+
+    function matchesMultipleValues(selectedValues, productValues) {
+        if (selectedValues.length === 0) {
+            return true;
+        }
+
+        const values = productValues
+            .split(" ")
+            .filter(Boolean);
+
+        return selectedValues.every(function (selectedValue) {
+            return values.includes(selectedValue);
+        });
+    }
+
+    function productMatchesFilters(card) {
+        const title = card
+            .querySelector(".product-title")
+            .textContent
+            .toLowerCase();
+
+        const keyword = searchInput.value
+            .toLowerCase()
+            .trim();
+
+        const brand =
+            card.dataset.brand || "";
+        const ram =
+            card.dataset.ram || "";
+        const storage =
+            card.dataset.storage || "";
+        const uses =
+            card.dataset.uses || "";
+        const screen =
+            card.dataset.screen || "";
+
+        const productPrice =
+            Number(card.dataset.priceValue || 0);
+
+        const matchesSearch =
+            keyword === "" || title.includes(keyword);
+
+        const matchesQuickFilter =
+            activeQuickFilter === "all" ||
+            brand === activeQuickFilter;
+
+
+        const matchesBrands =
+            matchesSingleValue(
+                appliedFilters.brands,
+                brand
+            );
+        
+        const matchesRam =
+            matchesSingleValue(
+                appliedFilters.ram,
+                ram
+            );
+        
+        const matchesStorage =
+            matchesSingleValue(
+                appliedFilters.storage,
+                storage
+            );
+        
+        const matchesUses =
+            matchesMultipleValues(
+                appliedFilters.uses,
+                uses
+            );
+        
+        const matchesScreens =
+            matchesSingleValue(
+                appliedFilters.screens,
+                screen
+            );
+        
+
+        const matchesPrice =
+            productPrice >= appliedFilters.minPrice &&
+            productPrice <= appliedFilters.maxPrice;
+
+        return (
+            matchesSearch &&
+            matchesQuickFilter &&
+            matchesBrands &&
+            matchesRam &&
+            matchesStorage &&
+            matchesUses &&
+            matchesScreens &&
+            matchesPrice
+        );
+    }
+
+    function sidebarFilterCount() {
+        const checkboxCount =
+            appliedFilters.brands.length +
+            appliedFilters.ram.length +
+            appliedFilters.storage.length +
+            appliedFilters.uses.length +
+            appliedFilters.screens.length;
+
+        const customPrice =
+            appliedFilters.minPrice !== DEFAULT_MIN_PRICE ||
+            appliedFilters.maxPrice !== DEFAULT_MAX_PRICE;
+
+        return checkboxCount + (customPrice ? 1 : 0);
+    }
+
+    function updateProducts() {
+        let visibleCount = 0;
+
+        productCards.forEach(function (card) {
+            const shouldShow = productMatchesFilters(card);
+
+            card.hidden = !shouldShow;
+            card.style.display = shouldShow ? "" : "none";
+
+            if (shouldShow) {
+                visibleCount++;
+            }
+        });
+
+        filterResultText.textContent =
+            "Hiển thị " +
+            visibleCount +
+            " / " +
+            productCards.length +
+            " sản phẩm";
+
+        noFilterResults.classList.toggle(
+            "show",
+            visibleCount === 0
+        );
+
+        const hasFilters =
+            sidebarFilterCount() > 0 ||
+            activeQuickFilter !== "all" ||
+            searchInput.value.trim() !== "";
+
+        clearAllButton.hidden = !hasFilters;
+    }
+
+    function createTag(label, groupName, value) {
+        const tag = document.createElement("span");
+        tag.className = "tag applied-filter-tag";
+        tag.dataset.group = groupName;
+        tag.dataset.value = value;
+
+        const text = document.createElement("span");
+        text.textContent = label;
+
+        const removeButton = document.createElement("button");
+        removeButton.type = "button";
+        removeButton.className = "remove-applied-filter";
+        removeButton.textContent = "×";
+        removeButton.setAttribute(
+            "aria-label",
+            "Bỏ bộ lọc " + label
+        );
+
+        tag.appendChild(text);
+        tag.appendChild(removeButton);
+
+        return tag;
+    }
+
+    function renderSelectedTags() {
+        selectedFilterTags.innerHTML = "";
+
+        sidebarInputs
+            .filter(function (input) {
+                return input.checked;
+            })
+            .forEach(function (input) {
+                selectedFilterTags.appendChild(
+                    createTag(
+                        input.dataset.label,
+                        input.name,
+                        input.value
+                    )
+                );
+            });
+
+        const customPrice =
+            appliedFilters.minPrice !== DEFAULT_MIN_PRICE ||
+            appliedFilters.maxPrice !== DEFAULT_MAX_PRICE;
+
+        if (customPrice) {
+            selectedFilterTags.appendChild(
+                createTag(
+                    formatCurrency(appliedFilters.minPrice) +
+                        " - " +
+                        formatCurrency(appliedFilters.maxPrice),
+                    "price",
+                    "custom"
+                )
+            );
+        }
+
+        if (!selectedFilterTags.children.length) {
+            const emptyTag = document.createElement("span");
+            emptyTag.className = "filter-empty-tag";
+            emptyTag.textContent = "Chưa chọn bộ lọc";
+            selectedFilterTags.appendChild(emptyTag);
+        }
+
+        activeFilterCount.textContent = sidebarFilterCount();
+    }
+
+    function updatePriceRange(changedInput) {
+        let minValue = Number(minPriceRange.value);
+        let maxValue = Number(maxPriceRange.value);
+
+        if (maxValue - minValue < MIN_PRICE_GAP) {
+            if (changedInput === "min") {
+                minValue = maxValue - MIN_PRICE_GAP;
+                minPriceRange.value = String(minValue);
+            } else {
+                maxValue = minValue + MIN_PRICE_GAP;
+                maxPriceRange.value = String(maxValue);
+            }
+        }
+
+        const maximum = Number(maxPriceRange.max);
+        const leftPercent = minValue / maximum * 100;
+        const rightPercent = maxValue / maximum * 100;
+
+        minPriceLabel.textContent = formatCurrency(minValue);
+        maxPriceLabel.textContent = formatCurrency(maxValue);
+
+        priceRangeFill.style.left = leftPercent + "%";
+        priceRangeFill.style.width =
+            rightPercent - leftPercent + "%";
+    }
+
+    function applySidebarFilters() {
+        appliedFilters = readSidebarFilters();
+        renderSelectedTags();
+        updateProducts();
+    }
+
+    function resetAllFilters() {
+        sidebarInputs.forEach(function (input) {
+            input.checked = false;
+        });
+
+        minPriceRange.value = String(DEFAULT_MIN_PRICE);
+        maxPriceRange.value = String(DEFAULT_MAX_PRICE);
+
+        activeQuickFilter = "all";
+        searchInput.value = "";
+
+        quickFilters.forEach(function (filter) {
+            filter.classList.toggle(
+                "active",
+                filter.dataset.filter === "all"
+            );
+        });
+
+        appliedFilters = readSidebarFilters();
+
+        updatePriceRange();
+        renderSelectedTags();
+        updateProducts();
+    }
+
+    buyButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            localStorage.setItem(
+                "prod_name",
+                this.dataset.name
+            );
+
+            localStorage.setItem(
+                "prod_price",
+                this.dataset.price
+            );
+
+            localStorage.setItem(
+                "prod_img",
+                this.dataset.img
+            );
+
+            localStorage.setItem(
+                "prod_desc",
+                this.dataset.description
+            );
+
+            localStorage.setItem(
+                "prod_category",
+                this.dataset.category || "laptop"
+            );
+
+            localStorage.setItem(
+                "prod_subtype",
+                this.dataset.subtype || "laptop"
+            );
+
+            window.location.href = "chitietsanpham.html";
+        });
+    });
+
+    searchInput.addEventListener("input", updateProducts);
+
+    quickFilters.forEach(function (filter) {
+        filter.addEventListener("click", function () {
+            quickFilters.forEach(function (item) {
+                item.classList.remove("active");
+            });
+
+            this.classList.add("active");
+            activeQuickFilter = this.dataset.filter;
+
+            updateProducts();
+        });
+    });
+
+    minPriceRange.addEventListener("input", function () {
+        updatePriceRange("min");
+    });
+
+    maxPriceRange.addEventListener("input", function () {
+        updatePriceRange("max");
+    });
+
+    applyButton.addEventListener(
+        "click",
+        applySidebarFilters
+    );
+
+    resetButton.addEventListener(
+        "click",
+        resetAllFilters
+    );
+
+    clearAllButton.addEventListener(
+        "click",
+        resetAllFilters
+    );
+
+    selectedFilterTags.addEventListener(
+        "click",
+        function (event) {
+            const removeButton = event.target.closest(
+                ".remove-applied-filter"
+            );
+
+            if (!removeButton) {
+                return;
+            }
+
+            const tag = removeButton.closest(
+                ".applied-filter-tag"
+            );
+
+            const groupName = tag.dataset.group;
+            const value = tag.dataset.value;
+
+            if (groupName === "price") {
+                minPriceRange.value =
+                    String(DEFAULT_MIN_PRICE);
+
+                maxPriceRange.value =
+                    String(DEFAULT_MAX_PRICE);
+
+                updatePriceRange();
+            } else {
+                const input = document.querySelector(
+                    'input[name="' +
+                        groupName +
+                        '"][value="' +
+                        value +
+                        '"]'
+                );
+
+                if (input) {
+                    input.checked = false;
+                }
+            }
+
+            applySidebarFilters();
+        }
+    );
+
+    updatePriceRange();
+    renderSelectedTags();
+    updateProducts();
+});
+</script></body>
+</html>

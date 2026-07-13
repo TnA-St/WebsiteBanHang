@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Phụ Kiện Điện Thoại</title>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/phukien-filter.css" rel="stylesheet"/></head>
+<body>
+<header class="navbar">
+<div class="logo">
+<div class="logo-box">💻</div>
+</div>
+<nav class="menu-chinh">
+<a href="trangchu.html">Trang chủ</a>
+<a href="gioithieu.html">Giới thiệu</a>
+<a class="active" href="phukien.html">Phụ kiện Điện Thoại</a>
+<a href="dienthoai.html">Điện thoại</a>
+<a href="laptop.html">LapTop</a>
+<a href="phukienmaytinh.html">Phụ kiện Máy tính</a>
+<a class="btn-orange" href="Dangnhap.html">Đăng nhập</a>
+<a class="btn-blue" href="DangKy.html">Đăng ký</a>
+</nav>
+</header>
+<div class="main-container">
+<aside class="sidebar" id="productFilterSidebar">
+<div class="filter-group">
+<div class="filter-title-row">
+<h3>Bộ lọc đã chọn</h3>
+<span class="filter-count-badge" id="activeFilterCount">0</span>
+</div>
+<div class="tags-container selected-filter-tags" id="selectedFilterTags">
+<span class="filter-empty-tag">Chưa chọn bộ lọc</span>
+</div>
+</div>
+<div class="filter-group">
+<h3>Loại phụ kiện</h3>
+<label>
+<input class="sidebar-filter-input" data-label="Củ sạc" name="product-type" type="checkbox" value="cu-sac"/>
+            Củ sạc
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="Dây sạc" name="product-type" type="checkbox" value="day-sac"/>
+            Dây sạc
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="Sạc dự phòng" name="product-type" type="checkbox" value="sac-du-phong"/>
+            Sạc dự phòng
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="Kính cường lực" name="product-type" type="checkbox" value="dan-dien-thoai"/>
+            Kính cường lực
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="Hub USB-C" name="product-type" type="checkbox" value="hub-usb-c"/>
+            Hub USB-C
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="Tai nghe" name="product-type" type="checkbox" value="tai-nghe"/>
+            Tai nghe
+        </label>
+</div>
+<div class="filter-group">
+<h3>Chuẩn kết nối</h3>
+<label>
+<input class="sidebar-filter-input" data-label="USB-C" name="connection" type="checkbox" value="usb-c"/>
+            USB-C
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="Bluetooth" name="connection" type="checkbox" value="bluetooth"/>
+            Bluetooth
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="Không cần kết nối" name="connection" type="checkbox" value="khong-ket-noi"/>
+            Không cần kết nối
+        </label>
+</div>
+<div class="filter-group">
+<h3>Công suất sạc</h3>
+<label>
+<input class="sidebar-filter-input" data-label="22.5W" name="power" type="checkbox" value="22.5"/>
+            22.5W
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="40W" name="power" type="checkbox" value="40"/>
+            40W
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="60W" name="power" type="checkbox" value="60"/>
+            60W
+        </label>
+</div>
+<div class="filter-group">
+<h3>Tính năng</h3>
+<label>
+<input class="sidebar-filter-input" data-label="Sạc nhanh" name="feature" type="checkbox" value="sac-nhanh"/>
+            Sạc nhanh
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="Công nghệ GaN" name="feature" type="checkbox" value="gan"/>
+            Công nghệ GaN
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="Cáp tích hợp" name="feature" type="checkbox" value="cap-tich-hop"/>
+            Cáp tích hợp
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="Kính cường lực 9H" name="feature" type="checkbox" value="kinh-9h"/>
+            Kính cường lực 9H
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="Hub 5 in 1" name="feature" type="checkbox" value="hub-5-in-1"/>
+            Hub 5 in 1
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="Không dây" name="feature" type="checkbox" value="khong-day"/>
+            Không dây
+        </label>
+</div>
+<div class="filter-group">
+<h3>Giá tiền</h3>
+<div class="price-header functional-price-header">
+<span id="minPriceLabel">0đ</span>
+<span id="maxPriceLabel">5.000.000đ</span>
+</div>
+<div class="dual-range">
+<div class="dual-range-track"></div>
+<div class="dual-range-fill" id="priceRangeFill"></div>
+<input aria-label="Giá thấp nhất" class="price-range-input" id="minPriceRange" max="5000000" min="0" step="50000" type="range" value="0"/>
+<input aria-label="Giá cao nhất" class="price-range-input" id="maxPriceRange" max="5000000" min="0" step="50000" type="range" value="5000000"/>
+</div>
+</div>
+<div class="filter-actions">
+<button class="btn-apply-filter" id="applySidebarFilters" type="button">
+            Áp dụng bộ lọc
+        </button>
+<button class="btn-reset-filter" id="resetSidebarFilters" type="button">
+            Đặt lại
+        </button>
+</div>
+</aside>
+<main class="content-products">
+<div class="top-bar">
+<div class="search-box">
+<input id="searchInput" placeholder="Tìm kiếm phụ kiện" type="text"/>
+<span class="search-icon">🔍</span>
+</div>
+<div class="quick-filters">
+<span class="q-filter active" data-filter="all">✓ Mới nhất</span>
+<span class="q-filter" data-filter="cu-sac">Củ sạc</span>
+<span class="q-filter" data-filter="dan-dien-thoai">Dán ĐT</span>
+<span class="q-filter" data-filter="sac-du-phong">Sạc dự phòng</span>
+<span class="q-filter" data-filter="day-sac">Dây sạc</span>
+<span class="q-filter" data-filter="hub-usb-c">Hub USB-C</span>
+<span class="q-filter" data-filter="tai-nghe">Tai nghe</span>
+</div>
+</div><div class="filter-result-bar">
+<p aria-live="polite" id="filterResultText">
+        Hiển thị tất cả sản phẩm
+    </p>
+<button class="clear-all-filters" hidden="" id="clearAllFiltersButton" type="button">
+        Xóa tất cả bộ lọc
+    </button>
+</div>
+<div class="products-grid">
+<div class="product-card" data-category="day-sac" data-connection="usb-c" data-features="sac-nhanh" data-power="60" data-price-value="219000" data-product-type="day-sac">
+<div class="product-img">
+<img alt="Dây sạc USB-C" src="img/Cáp sạc nhanh từ tính tự cuộn 9Fit USB-C to USB-C 60W, 1m, Xanh lá (9C10MCCG).webp"/>
+</div>
+<h4 class="product-title">Dây sạc USB-C</h4>
+<p class="product-price">219.000đ</p>
+<button class="btn-buy" data-category="phone-accessory" data-description="Cáp sạc nhanh từ tính tự cuộn chống rối, hỗ trợ công suất lên đến 60W, thân dây bọc dù bền và truyền tải dòng điện ổn định." data-img="img/Cáp sạc nhanh từ tính tự cuộn 9Fit USB-C to USB-C 60W, 1m, Xanh lá (9C10MCCG).webp" data-name="Dây sạc USB-C" data-price="219.000đ" data-subtype="cable">
+                        Buy
+                    </button>
+</div>
+<div class="product-card" data-category="cu-sac" data-connection="usb-c" data-features="sac-nhanh gan" data-power="40" data-price-value="440000" data-product-type="cu-sac">
+<div class="product-img">
+<img alt="Củ sạc Mophie" src="img/Củ sạc Mophie Essentials 40W 1C GaN White - 409917454.webp"/>
+</div>
+<h4 class="product-title">Củ sạc Mophie</h4>
+<p class="product-price">440.000đ</p>
+<button class="btn-buy" data-category="phone-accessory" data-description="Củ sạc GaN nhỏ gọn, hỗ trợ sạc nhanh PD 40W qua cổng USB-C và tích hợp các cơ chế bảo vệ thiết bị." data-img="img/Củ sạc Mophie Essentials 40W 1C GaN White - 409917454.webp" data-name="Củ sạc Mophie" data-price="440.000đ" data-subtype="charger">
+                        Buy
+                    </button>
+</div>
+<div class="product-card" data-category="dan-dien-thoai" data-connection="khong-ket-noi" data-features="kinh-9h" data-power="" data-price-value="390000" data-product-type="dan-dien-thoai">
+<div class="product-img">
+<img alt="Dán cường lực" src="img/Dán kinh ip.webp"/>
+</div>
+<h4 class="product-title">Dán cường lực</h4>
+<p class="product-price">390.000đ</p>
+<button class="btn-buy" data-category="phone-accessory" data-description="Kính cường lực độ cứng 9H, giúp hạn chế trầy xước và va đập, bề mặt phủ nano giảm bám dấu vân tay." data-img="img/Dán kinh ip.webp" data-name="Dán cường lực" data-price="390.000đ" data-subtype="screen-protector">
+                        Buy
+                    </button>
+</div>
+<div class="product-card" data-category="sac-du-phong" data-connection="usb-c" data-features="sac-nhanh cap-tich-hop" data-power="22.5" data-price-value="850000" data-product-type="sac-du-phong">
+<div class="product-img">
+<img alt="Sạc dự phòng" src="img/Pin sạc dự phòng Baseus EnerFill FC51 Bipow2 Pro Built-in Cable Digital Display 10000mAh 22.5W.webp"/>
+</div>
+<h4 class="product-title">Sạc dự phòng</h4>
+<p class="product-price">850.000đ</p>
+<button class="btn-buy" data-category="phone-accessory" data-description="Pin dự phòng 10000mAh tích hợp dây cáp, màn hình hiển thị phần trăm pin và hỗ trợ sạc nhanh công suất 22.5W." data-img="img/Pin sạc dự phòng Baseus EnerFill FC51 Bipow2 Pro Built-in Cable Digital Display 10000mAh 22.5W.webp" data-name="Sạc dự phòng" data-price="850.000đ" data-subtype="power-bank">
+                        Buy
+                    </button>
+</div>
+<div class="product-card" data-category="hub-usb-c" data-connection="usb-c" data-features="hub-5-in-1" data-power="" data-price-value="600000" data-product-type="hub-usb-c">
+<div class="product-img">
+<img alt="USB-C 5 in 1" src="img/USB-C 5 in1.webp"/>
+</div>
+<h4 class="product-title">USB-C 5 in 1</h4>
+<p class="product-price">600.000đ</p>
+<button class="btn-buy" data-category="phone-accessory" data-description="Hub USB-C đa năng mở rộng thành năm cổng kết nối, hỗ trợ truyền dữ liệu và xuất hình ảnh ổn định." data-img="img/USB-C 5 in1.webp" data-name="USB-C 5 in 1" data-price="600.000đ" data-subtype="hub">
+                        Buy
+                    </button>
+</div>
+<div class="product-card" data-category="tai-nghe" data-connection="bluetooth" data-features="khong-day" data-power="" data-price-value="3490000" data-product-type="tai-nghe">
+<div class="product-img">
+<img alt="Tai nghe không dây" src="img/Tai nghe Bluetooth Apple AirPods 4.webp"/>
+</div>
+<h4 class="product-title">Tai nghe không dây</h4>
+<p class="product-price">3.490.000đ</p>
+<button class="btn-buy" data-category="phone-accessory" data-description="Tai nghe Bluetooth thiết kế công thái học, âm thanh rõ ràng, kết nối nhanh và thời lượng pin dài." data-img="img/Tai nghe Bluetooth Apple AirPods 4.webp" data-name="Tai nghe không dây" data-price="3.490.000đ" data-subtype="headphone">
+                        Buy
+                    </button>
+</div>
+</div>
+</main>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const productCards = Array.from(
+        document.querySelectorAll(".product-card")
+    );
+
+    const buyButtons =
+        document.querySelectorAll(".btn-buy");
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const quickFilters =
+        document.querySelectorAll(".q-filter");
+
+    const sidebarInputs = Array.from(
+        document.querySelectorAll(".sidebar-filter-input")
+    );
+
+    const applyButton =
+        document.getElementById("applySidebarFilters");
+
+    const resetButton =
+        document.getElementById("resetSidebarFilters");
+
+    const clearAllButton =
+        document.getElementById("clearAllFiltersButton");
+
+    const selectedFilterTags =
+        document.getElementById("selectedFilterTags");
+
+    const activeFilterCount =
+        document.getElementById("activeFilterCount");
+
+    const filterResultText =
+        document.getElementById("filterResultText");
+
+    const minPriceRange =
+        document.getElementById("minPriceRange");
+
+    const maxPriceRange =
+        document.getElementById("maxPriceRange");
+
+    const minPriceLabel =
+        document.getElementById("minPriceLabel");
+
+    const maxPriceLabel =
+        document.getElementById("maxPriceLabel");
+
+    const priceRangeFill =
+        document.getElementById("priceRangeFill");
+
+    const DEFAULT_MIN_PRICE = 0;
+    const DEFAULT_MAX_PRICE = 5000000;
+    const MIN_PRICE_GAP = 50000;
+
+    let activeQuickFilter = "all";
+
+    let appliedFilters = {
+        productTypes: [],
+        connections: [],
+        powers: [],
+        features: [],
+        minPrice: DEFAULT_MIN_PRICE,
+        maxPrice: DEFAULT_MAX_PRICE
+    };
+
+    function formatCurrency(value) {
+        return new Intl.NumberFormat("vi-VN").format(value) + "đ";
+    }
+
+    function getCheckedValues(name) {
+        return Array.from(
+            document.querySelectorAll(
+                'input[name="' + name + '"]:checked'
+            )
+        ).map(function (input) {
+            return input.value;
+        });
+    }
+
+    function readSidebarFilters() {
+        return {
+            productTypes: getCheckedValues("product-type"),
+            connections: getCheckedValues("connection"),
+            powers: getCheckedValues("power"),
+            features: getCheckedValues("feature"),
+            minPrice: Number(minPriceRange.value),
+            maxPrice: Number(maxPriceRange.value)
+        };
+    }
+
+    function matchesSingleValue(selectedValues, productValue) {
+        if (selectedValues.length === 0) {
+            return true;
+        }
+
+        return selectedValues.includes(productValue);
+    }
+
+    function matchesFeatureValues(selectedValues, productFeatures) {
+        if (selectedValues.length === 0) {
+            return true;
+        }
+
+        const featureList = productFeatures
+            .split(" ")
+            .filter(Boolean);
+
+        /*
+         * Khi chọn nhiều tính năng, sản phẩm phải có đủ
+         * tất cả tính năng đã chọn.
+         */
+        return selectedValues.every(function (feature) {
+            return featureList.includes(feature);
+        });
+    }
+
+    function productMatchesFilters(card) {
+        const title = card
+            .querySelector(".product-title")
+            .textContent
+            .toLowerCase();
+
+        const keyword = searchInput.value
+            .toLowerCase()
+            .trim();
+
+        const productType =
+            card.dataset.productType || "";
+
+        const connection =
+            card.dataset.connection || "";
+
+        const power =
+            card.dataset.power || "";
+
+        const features =
+            card.dataset.features || "";
+
+        const price =
+            Number(card.dataset.priceValue || 0);
+
+        const matchesSearch =
+            keyword === "" || title.includes(keyword);
+
+        const matchesQuickFilter =
+            activeQuickFilter === "all" ||
+            productType === activeQuickFilter;
+
+        const matchesType =
+            matchesSingleValue(
+                appliedFilters.productTypes,
+                productType
+            );
+
+        const matchesConnection =
+            matchesSingleValue(
+                appliedFilters.connections,
+                connection
+            );
+
+        const matchesPower =
+            matchesSingleValue(
+                appliedFilters.powers,
+                power
+            );
+
+        const matchesFeatures =
+            matchesFeatureValues(
+                appliedFilters.features,
+                features
+            );
+
+        const matchesPrice =
+            price >= appliedFilters.minPrice &&
+            price <= appliedFilters.maxPrice;
+
+        return (
+            matchesSearch &&
+            matchesQuickFilter &&
+            matchesType &&
+            matchesConnection &&
+            matchesPower &&
+            matchesFeatures &&
+            matchesPrice
+        );
+    }
+
+    function activeSidebarFilterCountValue() {
+        const checkboxCount =
+            appliedFilters.productTypes.length +
+            appliedFilters.connections.length +
+            appliedFilters.powers.length +
+            appliedFilters.features.length;
+
+        const hasCustomPrice =
+            appliedFilters.minPrice !== DEFAULT_MIN_PRICE ||
+            appliedFilters.maxPrice !== DEFAULT_MAX_PRICE;
+
+        return checkboxCount + (hasCustomPrice ? 1 : 0);
+    }
+
+    function updateProducts() {
+        let visibleCount = 0;
+
+        productCards.forEach(function (card) {
+            const shouldShow = productMatchesFilters(card);
+
+            card.hidden = !shouldShow;
+            card.style.display = shouldShow ? "" : "none";
+
+            if (shouldShow) {
+                visibleCount++;
+            }
+        });
+
+        filterResultText.textContent =
+            "Hiển thị " +
+            visibleCount +
+            " / " +
+            productCards.length +
+            " sản phẩm";
+
+        const hasFilters =
+            activeSidebarFilterCountValue() > 0 ||
+            activeQuickFilter !== "all" ||
+            searchInput.value.trim() !== "";
+
+        clearAllButton.hidden = !hasFilters;
+    }
+
+    function createTag(label, groupName, value) {
+        const tag = document.createElement("span");
+        tag.className = "tag applied-filter-tag";
+        tag.dataset.group = groupName;
+        tag.dataset.value = value;
+
+        const text = document.createElement("span");
+        text.textContent = label;
+
+        const removeButton = document.createElement("button");
+        removeButton.type = "button";
+        removeButton.className = "remove-applied-filter";
+        removeButton.textContent = "×";
+        removeButton.setAttribute(
+            "aria-label",
+            "Bỏ bộ lọc " + label
+        );
+
+        tag.appendChild(text);
+        tag.appendChild(removeButton);
+
+        return tag;
+    }
+
+    function renderSelectedTags() {
+        selectedFilterTags.innerHTML = "";
+
+        sidebarInputs
+            .filter(function (input) {
+                return input.checked;
+            })
+            .forEach(function (input) {
+                selectedFilterTags.appendChild(
+                    createTag(
+                        input.dataset.label,
+                        input.name,
+                        input.value
+                    )
+                );
+            });
+
+        const hasCustomPrice =
+            appliedFilters.minPrice !== DEFAULT_MIN_PRICE ||
+            appliedFilters.maxPrice !== DEFAULT_MAX_PRICE;
+
+        if (hasCustomPrice) {
+            selectedFilterTags.appendChild(
+                createTag(
+                    formatCurrency(appliedFilters.minPrice) +
+                        " - " +
+                        formatCurrency(appliedFilters.maxPrice),
+                    "price",
+                    "custom"
+                )
+            );
+        }
+
+        if (!selectedFilterTags.children.length) {
+            const emptyTag = document.createElement("span");
+            emptyTag.className = "filter-empty-tag";
+            emptyTag.textContent = "Chưa chọn bộ lọc";
+            selectedFilterTags.appendChild(emptyTag);
+        }
+
+        activeFilterCount.textContent =
+            activeSidebarFilterCountValue();
+    }
+
+    function updatePriceRangeInterface(changedInput) {
+        let minValue = Number(minPriceRange.value);
+        let maxValue = Number(maxPriceRange.value);
+
+        if (maxValue - minValue < MIN_PRICE_GAP) {
+            if (changedInput === "min") {
+                minValue = maxValue - MIN_PRICE_GAP;
+                minPriceRange.value = String(minValue);
+            } else {
+                maxValue = minValue + MIN_PRICE_GAP;
+                maxPriceRange.value = String(maxValue);
+            }
+        }
+
+        const maximum = Number(maxPriceRange.max);
+        const leftPercent = minValue / maximum * 100;
+        const rightPercent = maxValue / maximum * 100;
+
+        minPriceLabel.textContent = formatCurrency(minValue);
+        maxPriceLabel.textContent = formatCurrency(maxValue);
+
+        priceRangeFill.style.left = leftPercent + "%";
+        priceRangeFill.style.width =
+            rightPercent - leftPercent + "%";
+    }
+
+    function applySidebarFilters() {
+        appliedFilters = readSidebarFilters();
+
+        renderSelectedTags();
+        updateProducts();
+    }
+
+    function resetAllFilters() {
+        sidebarInputs.forEach(function (input) {
+            input.checked = false;
+        });
+
+        minPriceRange.value = String(DEFAULT_MIN_PRICE);
+        maxPriceRange.value = String(DEFAULT_MAX_PRICE);
+
+        activeQuickFilter = "all";
+        searchInput.value = "";
+
+        quickFilters.forEach(function (filter) {
+            filter.classList.toggle(
+                "active",
+                filter.dataset.filter === "all"
+            );
+        });
+
+        appliedFilters = readSidebarFilters();
+
+        updatePriceRangeInterface();
+        renderSelectedTags();
+        updateProducts();
+    }
+
+    buyButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            localStorage.setItem(
+                "prod_name",
+                this.dataset.name
+            );
+
+            localStorage.setItem(
+                "prod_price",
+                this.dataset.price
+            );
+
+            localStorage.setItem(
+                "prod_img",
+                this.dataset.img
+            );
+
+            localStorage.setItem(
+                "prod_desc",
+                this.dataset.description
+            );
+
+            localStorage.setItem(
+                "prod_category",
+                this.dataset.category ||
+                    "phone-accessory"
+            );
+
+            localStorage.setItem(
+                "prod_subtype",
+                this.dataset.subtype || ""
+            );
+
+            window.location.href =
+                "chitietsanpham.html";
+        });
+    });
+
+    searchInput.addEventListener(
+        "input",
+        updateProducts
+    );
+
+    quickFilters.forEach(function (filter) {
+        filter.addEventListener("click", function () {
+            quickFilters.forEach(function (item) {
+                item.classList.remove("active");
+            });
+
+            this.classList.add("active");
+            activeQuickFilter = this.dataset.filter;
+
+            updateProducts();
+        });
+    });
+
+    minPriceRange.addEventListener("input", function () {
+        updatePriceRangeInterface("min");
+    });
+
+    maxPriceRange.addEventListener("input", function () {
+        updatePriceRangeInterface("max");
+    });
+
+    applyButton.addEventListener(
+        "click",
+        applySidebarFilters
+    );
+
+    resetButton.addEventListener(
+        "click",
+        resetAllFilters
+    );
+
+    clearAllButton.addEventListener(
+        "click",
+        resetAllFilters
+    );
+
+    selectedFilterTags.addEventListener(
+        "click",
+        function (event) {
+            const removeButton = event.target.closest(
+                ".remove-applied-filter"
+            );
+
+            if (!removeButton) {
+                return;
+            }
+
+            const tag = removeButton.closest(
+                ".applied-filter-tag"
+            );
+
+            const groupName = tag.dataset.group;
+            const value = tag.dataset.value;
+
+            if (groupName === "price") {
+                minPriceRange.value =
+                    String(DEFAULT_MIN_PRICE);
+
+                maxPriceRange.value =
+                    String(DEFAULT_MAX_PRICE);
+
+                updatePriceRangeInterface();
+            } else {
+                const input = document.querySelector(
+                    'input[name="' +
+                        groupName +
+                        '"][value="' +
+                        value +
+                        '"]'
+                );
+
+                if (input) {
+                    input.checked = false;
+                }
+            }
+
+            applySidebarFilters();
+        }
+    );
+
+    updatePriceRangeInterface();
+    renderSelectedTags();
+    updateProducts();
+});
+</script></body>
+</html>

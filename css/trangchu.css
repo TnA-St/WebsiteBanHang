@@ -1,0 +1,271 @@
+.catalog-page {
+    width: min(1240px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 38px 0 60px;
+}
+
+.catalog-heading {
+    margin-bottom: 26px;
+    padding: 26px 30px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+    gap: 28px;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.catalog-label {
+    margin-bottom: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #777777;
+}
+
+.catalog-heading h1 {
+    margin-bottom: 8px;
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1.2;
+    color: #222222;
+}
+
+.catalog-heading-text > p:last-child {
+    max-width: 620px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #777777;
+}
+
+/* =========================
+   Ô TÌM KIẾM
+   ========================= */
+.catalog-search {
+    min-height: 46px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #d5d5d5;
+    border-radius: 24px;
+    background: #ffffff;
+}
+
+.catalog-search input {
+    width: 100%;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+}
+
+/* =========================
+   KHUNG DANH SÁCH
+   ========================= */
+.catalog-panel {
+    padding: 28px;
+    border: 1px solid #e0e0e0;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.catalog-toolbar {
+    margin-bottom: 22px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.catalog-toolbar h2 {
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.catalog-toolbar p,
+.catalog-page-indicator {
+    font-size: 13px;
+    color: #777777;
+}
+
+/* ==========================================================
+   LƯỚI SẢN PHẨM
+   Tối đa 3 sản phẩm trên mỗi hàng.
+   Khi có thêm sản phẩm, trình duyệt tự tạo hàng mới.
+   ========================================================== */
+.catalog-panel .products-grid.catalog-grid {
+    width: 100%;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-auto-flow: row;
+    gap: 24px !important;
+    align-items: stretch;
+}
+
+/* Mỗi card chiếm đúng một ô trong lưới */
+.catalog-panel .product-card.catalog-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 360px;
+    margin: 0 !important;
+    padding: 18px !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+/* Khung ảnh có chiều cao cố định để các card thẳng hàng */
+.catalog-panel .product-card .product-img.catalog-product-image {
+    width: 100% !important;
+    height: 210px !important;
+    margin: 0 0 16px !important;
+    padding: 8px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+/* Không cho ảnh phóng lớn vượt khỏi card */
+.catalog-panel .product-card .product-img img {
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    display: block;
+}
+
+/* Tên sản phẩm có chiều cao tương đối đồng đều */
+.catalog-panel .product-title {
+    min-height: 38px;
+    margin: 0 0 8px !important;
+    font-size: 15px !important;
+    line-height: 1.35;
+}
+
+/* Giá */
+.catalog-panel .product-price {
+    margin: 0 0 14px !important;
+    font-size: 16px !important;
+}
+
+/* Nút Buy nằm cuối card */
+.catalog-panel .btn-buy {
+    margin-top: auto;
+}
+
+/* =========================
+   KHI KHÔNG CÓ KẾT QUẢ
+   ========================= */
+.empty-result {
+    display: none;
+    padding: 42px 20px;
+    border: 1px dashed #cccccc;
+    border-radius: 12px;
+    color: #777777;
+    text-align: center;
+}
+
+.empty-result.show {
+    display: block;
+}
+
+/* =========================
+   PHÂN TRANG
+   ========================= */
+.pagination {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.page-number-list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-control,
+.page-number {
+    min-width: 36px;
+    min-height: 36px;
+    border: none;
+}
+
+.page-control:disabled {
+    cursor: not-allowed;
+    opacity: 0.35;
+}
+
+.pagination-help {
+    margin-top: 14px;
+    color: #888888;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* =========================
+   TABLET: 2 CỘT
+   ========================= */
+@media (max-width: 992px) {
+    .catalog-heading {
+        grid-template-columns: 1fr;
+    }
+
+    .catalog-panel .products-grid.catalog-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+/* =========================
+   MOBILE: 1 CỘT
+   ========================= */
+@media (max-width: 640px) {
+    .catalog-page {
+        width: min(100% - 24px, 560px);
+        padding: 24px 0 42px;
+    }
+
+    .catalog-heading,
+    .catalog-panel {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .catalog-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .catalog-panel .products-grid.catalog-grid {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+    }
+
+    .catalog-panel .product-card.catalog-card {
+        min-height: 0;
+    }
+
+    .catalog-panel .product-card .product-img.catalog-product-image {
+        height: 240px !important;
+    }
+
+    .pagination,
+    .page-number-list {
+        gap: 5px;
+    }
+
+    .pagination-help {
+        text-align: left;
+    }
+}

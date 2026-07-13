@@ -1,0 +1,167 @@
+.about-page {
+    width: 100%;
+    min-height: calc(100vh - 64px);
+    background: #f5f5f5;
+}
+
+.about-hero {
+    min-height: 530px;
+    margin: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    /*
+     * Đổi ảnh nền tại đây.
+     * Đặt ảnh của bạn vào: img/gioithieu-bg.jpg
+     */
+    background-image: url("../img/gioithieu-bg.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.about-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.86),
+            rgba(255, 255, 255, 0.66)
+        );
+}
+
+.about-content {
+    width: min(720px, calc(100% - 40px));
+    position: relative;
+    z-index: 1;
+    padding: 42px;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(8px);
+}
+
+.about-label {
+    margin-bottom: 8px;
+    color: #1b5e20;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+.about-content h1 {
+    margin-bottom: 10px;
+    color: #222222;
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.1;
+}
+
+.about-subtitle {
+    margin-bottom: 28px;
+    color: #666666;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.member-list {
+    display: grid;
+    gap: 12px;
+}
+
+.member-card {
+    padding: 15px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.92);
+}
+
+.member-number {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #ffffff;
+    background: #40b3e7;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.member-card h2 {
+    margin-bottom: 3px;
+    color: #222222;
+    font-size: 16px;
+}
+
+.member-card p {
+    color: #777777;
+    font-size: 13px;
+}
+
+.about-description {
+    width: min(1200px, calc(100% - 40px));
+    margin: 36px auto 60px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.about-description-card {
+    padding: 24px;
+    border: 1px solid #e0e0e0;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.about-description-card h2 {
+    margin-bottom: 10px;
+    color: #222222;
+    font-size: 18px;
+}
+
+.about-description-card p {
+    color: #666666;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+    .about-description {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .about-hero {
+        min-height: auto;
+        padding: 36px 0;
+    }
+
+    .about-content {
+        padding: 24px;
+        border-radius: 12px;
+    }
+
+    .about-content h1 {
+        font-size: 34px;
+    }
+
+    .member-card {
+        align-items: flex-start;
+    }
+
+    .about-description {
+        width: min(100% - 24px, 560px);
+        margin-top: 24px;
+    }
+}

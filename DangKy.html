@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Đăng Ký Tài Khoản</title>
+
+    <!-- Hai trang cùng sử dụng một file CSS -->
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <!-- Logo đã đồng nhất với những trang còn lại -->
+        <div class="logo">
+            <a href="trangchu.html" class="logo-box" title="Về trang chủ">
+                💻
+            </a>
+        </div>
+
+        <nav class="menu-chinh">
+            <a href="trangchu.html">Trang chủ</a>
+            <a href="gioithieu.html">Giới thiệu</a>
+
+            <!-- Không còn class active đặt sai -->
+            <a href="phukien.html">Phụ kiện Điện Thoại</a>
+
+            <a href="dienthoai.html">Điện thoại</a>
+            <a href="laptop.html">LapTop</a>
+            <a href="phukienmaytinh.html">Phụ kiện Máy tính</a>
+            <a href="Dangnhap.html" class="btn-orange">Đăng nhập</a>
+            <a href="DangKy.html" class="btn-blue">Đăng ký</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="title-container">
+            <h1>Đăng Ký Tài Khoản</h1>
+            <p>Tài khoản bán hàng</p>
+        </div>
+
+        <div class="form-card">
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label for="registerUsername">Tên tài khoản</label>
+
+                    <input
+                        type="text"
+                        id="registerUsername"
+                        name="username"
+                        placeholder="Value"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+
+                    <input
+                        type="email"
+                        id="registerEmail"
+                        name="email"
+                        placeholder="Value"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="registerPassword">Mật khẩu</label>
+
+                    <input
+                        type="password"
+                        id="registerPassword"
+                        name="password"
+                        placeholder="Value"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    Đăng ký
+                </button>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>

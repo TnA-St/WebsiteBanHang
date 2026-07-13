@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Danh Sách Sản Phẩm</title>
+
+    <!-- CSS chung: màu sắc, font, header, nút và product-card -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- CSS riêng: chỉ bố trí giao diện trang sản phẩm này -->
+    <link rel="stylesheet" href="css/trangchu.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <div class="logo-box">💻</div>
+        </div>
+        <nav class="menu-chinh">
+            <a href="trangchu.html" class="active">Trang chủ</a>
+            <a href="gioithieu.html">Giới thiệu</a>
+            <a href="phukien.html">Phụ kiện Điện Thoại</a>
+            <a href="dienthoai.html">Điện thoại</a>
+            <a href="laptop.html">LapTop</a>
+            <a href="phukienmaytinh.html">Phụ kiện Máy tính</a>
+            <a href="Dangnhap.html" class="btn-orange">Đăng nhập</a>
+            <a href="DangKy.html" class="btn-blue">Đăng ký</a>
+        </nav>
+    </header>
+
+    <main class="catalog-page">
+
+        <section class="catalog-heading">
+            <div class="catalog-heading-text">
+                <p class="catalog-label">DANH MỤC SẢN PHẨM</p>
+
+                <h1 id="catalogTitle">Mẫu Điện Thoại Mới Nhất!</h1>
+
+                <p id="catalogDescription">
+                    Những mẫu điện thoại nổi bật đang có trong cửa hàng.
+                </p>
+            </div>
+
+            <div class="catalog-search">
+                <span aria-hidden="true">⌕</span>
+
+                <input
+                    id="searchInput"
+                    type="search"
+                    placeholder="Tìm trong danh mục hiện tại"
+                    autocomplete="off"
+                >
+            </div>
+        </section>
+
+        <section class="catalog-panel">
+
+            <div class="catalog-toolbar">
+                <div>
+                    <h2 id="categoryName">Điện thoại</h2>
+                    <p id="resultCount" aria-live="polite"></p>
+                </div>
+
+                <div class="catalog-page-indicator">
+                    Trang <strong id="currentPageText">1</strong>
+                    / <span id="totalPageText">4</span>
+                </div>
+            </div>
+
+            <div class="products-grid catalog-grid" id="productGrid"></div>
+
+            <div class="empty-result" id="emptyResult">
+                Không tìm thấy sản phẩm phù hợp.
+            </div>
+
+            <nav class="pagination" aria-label="Chuyển nhóm sản phẩm">
+                <button
+                    class="q-filter page-control"
+                    id="previousButton"
+                    type="button"
+                    aria-label="Trang trước"
+                >
+                    ‹
+                </button>
+
+                <div class="page-number-list" id="pageNumberList"></div>
+
+                <button
+                    class="q-filter page-control"
+                    id="nextButton"
+                    type="button"
+                    aria-label="Trang sau"
+                >
+                    ›
+                </button>
+            </nav>
+
+            <p class="pagination-help">
+                Trang 1: Điện thoại · Trang 2: Laptop ·
+                Trang 3: Phụ kiện điện thoại · Trang 4: Phụ kiện máy tính
+            </p>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const catalogPages = [
+                {
+                    name: "Điện thoại",
+                    title: "Mẫu Điện Thoại Mới Nhất!",
+                    description:
+                        "Những mẫu điện thoại nổi bật đang có trong cửa hàng.",
+                    products: [
+                        {
+                            name: "iPhone 17 Pro Max",
+                            price: "31.690.000đ",
+                            image: "img/cam-pro-17.webp",
+                            description:
+                                "Màn hình ProMotion 120Hz, hiệu năng mạnh và hệ thống camera cao cấp."
+                        },
+                        {
+                            name: "iPhone 16 Pro Max",
+                            price: "32.600.000đ",
+                            image: "img/den-16-pro.webp",
+                            description:
+                                "Chip Apple A18 Pro, camera Fusion 48MP và thiết kế titan."
+                        },
+                        {
+                            name: "Samsung Galaxy S24 Ultra",
+                            price: "18.990.000đ",
+                            image: "img/den-S24.webp",
+                            description:
+                                "Galaxy AI, camera 200MP, Snapdragon 8 Gen 3 và bút S Pen."
+                        },
+                        {
+                            name: "Samsung Galaxy S25 Ultra",
+                            price: "31.062.500đ",
+                            image: "img/den-S25.webp",
+                            description:
+                                "Xử lý AI thế hệ mới, camera Space Zoom và màn hình AMOLED."
+                        },
+                        {
+                            name: "Xiaomi 14T",
+                            price: "13.740.000đ",
+                            image: "img/den-14T.webp",
+                            description:
+                                "Camera Leica, hiệu năng ổn định và màn hình tần số quét cao."
+                        },
+                        {
+                            name: "Xiaomi 15T",
+                            price: "11.979.000đ",
+                            image: "img/den-15T.webp",
+                            description:
+                                "Camera Leica nâng cấp, sạc nhanh và thiết kế kính mờ."
+                        }
+                    ]
+                },
+                {
+                    name: "Laptop",
+                    title: "Mẫu Laptop Mới Nhất!",
+                    description:
+                        "Laptop dành cho học tập, văn phòng, gaming và đồ họa.",
+                    products: [
+                        {
+                            name: "MacBook Air 13 M2",
+                            price: "19.990.000đ",
+                            image: "img/bac-M2.webp",
+                            description:
+                                "Thiết kế mỏng nhẹ, chip Apple M2 và màn hình Liquid Retina."
+                        },
+                        {
+                            name: "MacBook Air M3 13",
+                            price: "32.990.000đ",
+                            image: "img/bac-M3.webp",
+                            description:
+                                "Chip Apple M3, hỗ trợ Ray Tracing và kết nối Wi-Fi 6E."
+                        },
+                        {
+                            name: "Dell 15 DC15250",
+                            price: "20.990.000đ",
+                            image: "img/dell-bac-15.webp",
+                            description:
+                                "Thiết kế thanh lịch, cấu hình ổn định và sạc nhanh ExpressCharge."
+                        },
+                        {
+                            name: "Dell Inspiron 15 3520",
+                            price: "6.990.000đ",
+                            image: "img/dell-den15.webp",
+                            description:
+                                "Phù hợp học tập, làm việc văn phòng và giải trí cơ bản."
+                        },
+                        {
+                            name: "Asus TUF Gaming",
+                            price: "21.990.000đ",
+                            image: "img/den-TUF.webp",
+                            description:
+                                "Laptop gaming bền bỉ, card RTX và màn hình tần số quét cao."
+                        },
+                        {
+                            name: "Asus Gaming V16",
+                            price: "34.490.001đ",
+                            image: "img/den-Gv16.webp",
+                            description:
+                                "Hiệu năng cao, màn hình 16 inch và card đồ họa rời."
+                        }
+                    ]
+                },
+                {
+                    name: "Phụ kiện điện thoại",
+                    title: "Phụ Kiện Điện Thoại Mới Nhất!",
+                    description:
+                        "Củ sạc, dây sạc, pin dự phòng, tai nghe và phụ kiện bảo vệ.",
+                    products: [
+                        {
+                            name: "Dây sạc USB-C 60W",
+                            price: "219.000đ",
+                            image:
+                                "img/Cáp sạc nhanh từ tính tự cuộn 9Fit USB-C to USB-C 60W, 1m, Xanh lá (9C10MCCG).webp",
+                            description:
+                                "Cáp sạc nhanh tự cuộn, chống rối và hỗ trợ công suất 60W."
+                        },
+                        {
+                            name: "Củ sạc Mophie 40W",
+                            price: "440.000đ",
+                            image:
+                                "img/Củ sạc Mophie Essentials 40W 1C GaN White - 409917454.webp",
+                            description:
+                                "Củ sạc GaN nhỏ gọn, hỗ trợ sạc nhanh PD 40W."
+                        },
+                        {
+                            name: "Dán cường lực",
+                            price: "390.000đ",
+                            image: "img/Dán kinh ip.webp",
+                            description:
+                                "Kính cường lực 9H, hạn chế trầy xước và bám dấu vân tay."
+                        },
+                        {
+                            name: "Sạc dự phòng Baseus",
+                            price: "850.000đ",
+                            image:
+                                "img/Pin sạc dự phòng Baseus EnerFill FC51 Bipow2 Pro Built-in Cable Digital Display 10000mAh 22.5W.webp",
+                            description:
+                                "Dung lượng 10000mAh, tích hợp dây sạc và màn hình hiển thị."
+                        },
+                        {
+                            name: "USB-C 5 in 1",
+                            price: "600.000đ",
+                            image: "img/USB-C 5 in1.webp",
+                            description:
+                                "Hub USB-C đa năng, hỗ trợ truyền dữ liệu và xuất hình ảnh."
+                        },
+                        {
+                            name: "Tai nghe AirPods 4",
+                            price: "3.490.000đ",
+                            image:
+                                "img/Tai nghe Bluetooth Apple AirPods 4.webp",
+                            description:
+                                "Kết nối Bluetooth nhanh, thiết kế gọn và thời lượng pin dài."
+                        }
+                    ]
+                },
+                {
+                    name: "Phụ kiện máy tính",
+                    title: "Phụ Kiện Máy Tính Mới Nhất!",
+                    description:
+                        "RAM, SSD, webcam và linh kiện nâng cấp máy tính.",
+                    products: [
+                        {
+                            name: "RAM Kingston Fury Beast",
+                            price: "1.250.000đ",
+                            image: "img/ram-kingston.webp",
+                            description:
+                                "RAM gaming có tản nhiệt nhôm và hiệu năng ổn định."
+                        },
+                        {
+                            name: "RAM XPG D50 RGB",
+                            price: "1.590.000đ",
+                            image: "img/ram-xpg.webp",
+                            description:
+                                "RAM có tản nhiệt kim loại và hệ thống đèn RGB."
+                        },
+                        {
+                            name: "RAM Corsair RGB White",
+                            price: "2.100.000đ",
+                            image: "img/ram-corsair-white.webp",
+                            description:
+                                "RAM màu trắng, thiết kế hiện đại và dải đèn RGB."
+                        },
+                        {
+                            name: "RAM Corsair DDR5",
+                            price: "2.890.000đ",
+                            image: "img/ram-corsair-black.webp",
+                            description:
+                                "RAM DDR5 băng thông cao, phù hợp tác vụ nặng."
+                        },
+                        {
+                            name: "Webcam Logitech C920",
+                            price: "1.650.000đ",
+                            image: "img/webcam-logitech.webp",
+                            description:
+                                "Webcam Full HD, tích hợp micro lọc tạp âm."
+                        },
+                        {
+                            name: "SSD Kioxia NVMe",
+                            price: "990.000đ",
+                            image: "img/ssd-kioxia.webp",
+                            description:
+                                "Ổ cứng NVMe tốc độ cao, giúp khởi động máy nhanh."
+                        }
+                    ]
+                }
+            ];
+
+            const catalogTitle =
+                document.getElementById("catalogTitle");
+            const catalogDescription =
+                document.getElementById("catalogDescription");
+            const categoryName =
+                document.getElementById("categoryName");
+            const resultCount =
+                document.getElementById("resultCount");
+            const currentPageText =
+                document.getElementById("currentPageText");
+            const totalPageText =
+                document.getElementById("totalPageText");
+            const productGrid =
+                document.getElementById("productGrid");
+            const emptyResult =
+                document.getElementById("emptyResult");
+            const pageNumberList =
+                document.getElementById("pageNumberList");
+            const previousButton =
+                document.getElementById("previousButton");
+            const nextButton =
+                document.getElementById("nextButton");
+            const searchInput =
+                document.getElementById("searchInput");
+
+            let currentPage = 1;
+
+            totalPageText.textContent = catalogPages.length;
+
+            function escapeHtml(value) {
+                return String(value)
+                    .replaceAll("&", "&amp;")
+                    .replaceAll("<", "&lt;")
+                    .replaceAll(">", "&gt;")
+                    .replaceAll('"', "&quot;")
+                    .replaceAll("'", "&#039;");
+            }
+
+            function createProductCard(product) {
+                const name = escapeHtml(product.name);
+                const price = escapeHtml(product.price);
+                const image = escapeHtml(product.image);
+                const description = escapeHtml(product.description);
+
+                return `
+                    <article class="product-card catalog-card">
+                        <div class="product-img catalog-product-image">
+                            <img
+                                src="${image}"
+                                alt="${name}"
+                                loading="lazy"
+                            >
+                        </div>
+
+                        <h3 class="product-title">${name}</h3>
+                        <p class="product-price">${price}</p>
+
+                        <button
+                            class="btn-buy"
+                            type="button"
+                            data-name="${name}"
+                            data-price="${price}"
+                            data-img="${image}"
+                            data-description="${description}"
+                        >
+                            Buy
+                        </button>
+                    </article>
+                `;
+            }
+
+            function renderPageNumbers() {
+                pageNumberList.innerHTML = "";
+
+                catalogPages.forEach(function (page, index) {
+                    const pageNumber = index + 1;
+                    const button = document.createElement("button");
+
+                    button.type = "button";
+                    button.className = "q-filter page-number";
+                    button.textContent = pageNumber;
+                    button.title = page.name;
+
+                    if (pageNumber === currentPage) {
+                        button.classList.add("active");
+                        button.setAttribute("aria-current", "page");
+                    }
+
+                    button.addEventListener("click", function () {
+                        currentPage = pageNumber;
+                        searchInput.value = "";
+                        renderCatalog();
+                    });
+
+                    pageNumberList.appendChild(button);
+                });
+
+                previousButton.disabled = currentPage === 1;
+                nextButton.disabled =
+                    currentPage === catalogPages.length;
+            }
+
+            function renderCatalog() {
+                const pageData = catalogPages[currentPage - 1];
+                const keyword =
+                    searchInput.value.trim().toLowerCase();
+
+                const visibleProducts = pageData.products.filter(
+                    function (product) {
+                        return product.name
+                            .toLowerCase()
+                            .includes(keyword);
+                    }
+                );
+
+                catalogTitle.textContent = pageData.title;
+                catalogDescription.textContent =
+                    pageData.description;
+                categoryName.textContent = pageData.name;
+                currentPageText.textContent = currentPage;
+
+                resultCount.textContent =
+                    "Hiển thị " +
+                    visibleProducts.length +
+                    " / " +
+                    pageData.products.length +
+                    " sản phẩm";
+
+                productGrid.innerHTML = visibleProducts
+                    .map(createProductCard)
+                    .join("");
+
+                emptyResult.classList.toggle(
+                    "show",
+                    visibleProducts.length === 0
+                );
+
+                renderPageNumbers();
+            }
+
+            productGrid.addEventListener("click", function (event) {
+                const buyButton =
+                    event.target.closest(".btn-buy");
+
+                if (!buyButton) {
+                    return;
+                }
+
+                localStorage.setItem(
+                    "prod_name",
+                    buyButton.dataset.name
+                );
+                localStorage.setItem(
+                    "prod_price",
+                    buyButton.dataset.price
+                );
+                localStorage.setItem(
+                    "prod_img",
+                    buyButton.dataset.img
+                );
+                localStorage.setItem(
+                    "prod_desc",
+                    buyButton.dataset.description
+                );
+
+                window.location.href =
+                    "chitietsanpham.html";
+            });
+
+            previousButton.addEventListener(
+                "click",
+                function () {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        searchInput.value = "";
+                        renderCatalog();
+                    }
+                }
+            );
+
+            nextButton.addEventListener(
+                "click",
+                function () {
+                    if (currentPage < catalogPages.length) {
+                        currentPage++;
+                        searchInput.value = "";
+                        renderCatalog();
+                    }
+                }
+            );
+
+            searchInput.addEventListener(
+                "input",
+                renderCatalog
+            );
+
+            renderCatalog();
+        });
+    </script>
+</body>
+</html>
