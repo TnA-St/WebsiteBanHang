@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: #f5f5f5; /* Đồng bộ màu nền xám nhạt */
+    background-color: #f5f5f5; 
     color: #333;
     display: flex;
     flex-direction: column;
@@ -15,7 +15,7 @@ body {
 
 
 header {
-    background-color: #d1f2d9; /* Màu xanh nhạt của thanh điều hướng */
+    background-color: #d1f2d9; 
     padding: 10px 40px;
     display: flex;
     justify-content: space-between;
@@ -48,18 +48,16 @@ nav a {
     color: #333;
     font-size: 14px;
     font-weight: 500;
-    padding: 6px 12px;   /* Padding tạo khoảng cách khung viền giống trang chủ */
-    border-radius: 4px;  /* Bo góc nhẹ phần khung nền */
+    padding: 6px 12px;   
+    border-radius: 4px;  
     transition: all 0.2s ease;
 }
 
-/* Khung viền/nền cho trang hiện tại */
 nav a.active {
-    background-color: #bce4c7; /* Màu nền xanh đậm hơn một chút */
-    color: #1b5e20;           /* Chữ màu xanh lá đậm */
+    background-color: #bce4c7; 
+    color: #1b5e20;           
 }
 
-/* Đồng bộ nút Đăng nhập / Đăng ký */
 .btn-orange {
     background-color: #ff9800;
     color: white !important;
@@ -72,10 +70,6 @@ nav a.active {
     font-weight: bold;
 }
 
-
-/* ==========================================================================
-   2. MAIN CONTENT - LAYOUT SẢN PHẨM & SIDEBAR
-   ========================================================================== */
 .main-container {
     flex: 1;
     display: flex;
@@ -86,12 +80,11 @@ nav a.active {
     gap: 30px;
 }
 
-/* --- THANH MENU BỘ LỌC BÊN TRÁI (SIDEBAR) --- */
 .sidebar {
     width: 260px;
     background: #ffffff;
     padding: 25px;
-    border-radius: 12px; /* Đồng bộ bo góc form-card */
+    border-radius: 12px; 
     box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Đồng bộ đổ bóng form-card */
     border: 1px solid #e0e0e0;
     flex-shrink: 0;
