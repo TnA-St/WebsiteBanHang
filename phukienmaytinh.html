@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Phụ Kiện Máy Tính</title>
+<!-- Giữ file CSS của trang phụ kiện máy tính -->
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/phukienmaytinh-filter.css" rel="stylesheet"/></head>
+<body>
+<header class="navbar">
+<div class="logo">
+<div class="logo-box">💻</div>
+</div>
+<nav class="menu-chinh">
+<a href="index.html" class="active">Trang chủ</a>
+<a href="gioithieu.html">Giới thiệu</a>
+<a href="phukien.html">Phụ kiện Điện Thoại</a>
+<a href="dienthoai.html">Điện thoại</a>
+<a href="laptop.html">LapTop</a>
+<a class="active" href="phukienmaytinh.html">Phụ kiện Máy tính</a>
+<a class="btn-orange" href="Dangnhap.html">Đăng nhập</a>
+<a class="btn-blue" href="DangKy.html">Đăng ký</a>
+</nav>
+</header>
+<div class="main-container">
+<aside class="sidebar" id="productFilterSidebar">
+<div class="filter-group">
+<div class="filter-title-row">
+<h3>Bộ lọc đã chọn</h3>
+<span class="filter-count-badge" id="activeFilterCount">0</span>
+</div>
+<div class="tags-container selected-filter-tags" id="selectedFilterTags">
+<span class="filter-empty-tag">Chưa chọn bộ lọc</span>
+</div>
+</div>
+<div class="filter-group">
+<h3>Loại sản phẩm</h3>
+<label>
+<input class="sidebar-filter-input" data-label="RAM" name="product-type" type="checkbox" value="ram"/>
+            RAM
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="SSD" name="product-type" type="checkbox" value="ssd"/>
+            SSD
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="Webcam" name="product-type" type="checkbox" value="webcam"/>
+            Webcam
+        </label>
+</div>
+<div class="filter-group">
+<h3>Dung lượng RAM</h3>
+<label>
+<input class="sidebar-filter-input" data-label="RAM 8GB" name="ram-capacity" type="checkbox" value="8"/>
+            8GB
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="RAM 16GB" name="ram-capacity" type="checkbox" value="16"/>
+            16GB
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="RAM 32GB" name="ram-capacity" type="checkbox" value="32"/>
+            32GB
+        </label>
+</div>
+<div class="filter-group">
+<h3>Dung lượng SSD</h3>
+<label>
+<input class="sidebar-filter-input" data-label="SSD 256GB" name="storage-capacity" type="checkbox" value="256"/>
+            256GB
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="SSD 500GB" name="storage-capacity" type="checkbox" value="500"/>
+            500GB
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="SSD 1TB" name="storage-capacity" type="checkbox" value="1000"/>
+            1TB
+        </label>
+</div>
+<div class="filter-group">
+<h3>Giá tiền</h3>
+<div class="price-header functional-price-header">
+<span id="minPriceLabel">0đ</span>
+<span id="maxPriceLabel">30.000.000đ</span>
+</div>
+<div class="dual-range" id="priceRangeControl">
+<div class="dual-range-track"></div>
+<div class="dual-range-fill" id="priceRangeFill"></div>
+<input aria-label="Giá thấp nhất" class="price-range-input" id="minPriceRange" max="30000000" min="0" step="100000" type="range" value="0"/>
+<input aria-label="Giá cao nhất" class="price-range-input" id="maxPriceRange" max="30000000" min="0" step="100000" type="range" value="30000000"/>
+</div>
+<p class="price-filter-note">
+            Sản phẩm “Liên hệ” được tính là 0đ khi lọc giá.
+        </p>
+</div>
+<div class="filter-group">
+<h3>Chuẩn sản phẩm</h3>
+<label>
+<input class="sidebar-filter-input" data-label="DDR4" name="standard" type="checkbox" value="ddr4"/>
+            DDR4
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="DDR5" name="standard" type="checkbox" value="ddr5"/>
+            DDR5
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="SATA" name="standard" type="checkbox" value="sata"/>
+            SATA
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="NVMe" name="standard" type="checkbox" value="nvme"/>
+            NVMe
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="USB" name="standard" type="checkbox" value="usb"/>
+            USB
+        </label>
+</div>
+<div class="filter-group">
+<h3>Độ phân giải Webcam</h3>
+<label>
+<input class="sidebar-filter-input" data-label="Webcam HD 720p" name="resolution" type="checkbox" value="hd"/>
+            HD 720p
+        </label>
+<label>
+<input class="sidebar-filter-input" data-label="Webcam Full HD" name="resolution" type="checkbox" value="full-hd"/>
+            Full HD 1080p
+        </label>
+</div>
+<div class="filter-actions">
+<button class="btn-apply-filter" id="applySidebarFilters" type="button">
+            Áp dụng bộ lọc
+        </button>
+<button class="btn-reset-filter" id="resetSidebarFilters" type="button">
+            Đặt lại
+        </button>
+</div>
+</aside>
+<main class="content-products">
+<div class="top-bar">
+<div class="search-box">
+<input id="searchInput" placeholder="Tìm kiếm sản phẩm" type="text"/>
+<span class="search-icon">🔍</span>
+</div>
+<div class="quick-filters">
+<span class="q-filter active" data-filter="all">✓ Mới nhất</span>
+<span class="q-filter" data-filter="ram">RAM</span>
+<span class="q-filter" data-filter="ssd">SSD</span>
+<span class="q-filter" data-filter="webcam">Webcam</span></div>
+</div><div class="filter-result-bar">
+<p aria-live="polite" id="filterResultText">
+        Hiển thị tất cả sản phẩm
+    </p>
+<button class="clear-all-filters" hidden="" id="clearAllFiltersButton" type="button">
+        Xóa tất cả bộ lọc
+    </button>
+</div>
+<div class="products-grid">
+<!-- SẢN PHẨM 1 -->
+<div class="product-card" data-category="ram" data-price-value="3150000" data-product-type="ram" data-ram-capacity="16" data-resolution="" data-standard="ddr4" data-storage-capacity="">
+<div class="product-img">
+<!-- Bạn tự thêm đường dẫn ảnh vào src -->
+<img alt="RAM Kingston Fury Beast DDR4" loading="lazy" onerror="this.onerror=null;this.src='img/placeholder-product.svg';" src="img/RAN PC_fury.png"/>
+</div>
+<h4 class="product-title">RAM Kingston Fury Beast DDR4</h4>
+<p class="product-price">3.150.000đ</p>
+<button class="btn-buy" data-category="computer-accessory" data-description="RAM Kingston Fury Beast DDR4 có thiết kế tản nhiệt màu đen, hỗ trợ vận hành ổn định và phù hợp cho máy tính chơi game, học tập hoặc làm việc đa nhiệm." data-img="img/RAN PC_fury.png" data-name="RAM Kingston Fury Beast DDR4" data-price="3.150.000đ" data-subtype="ram">
+                        Buy
+                    </button>
+</div>
+<!-- SẢN PHẨM 2 -->
+<div class="product-card" data-category="ram" data-price-value="2690000" data-product-type="ram" data-ram-capacity="16" data-resolution="" data-standard="ddr4" data-storage-capacity="">
+<div class="product-img">
+<!-- Bạn tự thêm đường dẫn ảnh vào src -->
+<img alt="RAM ADATA XPG Spectrix D50 RGB" loading="lazy" onerror="this.onerror=null;this.src='img/placeholder-product.svg';" src="img/Ram_adata_xpg.png"/>
+</div>
+<h4 class="product-title">RAM ADATA XPG Spectrix D50 RGB</h4>
+<p class="product-price">2.690.000đ</p>
+<button class="btn-buy" data-category="computer-accessory" data-description="RAM ADATA XPG Spectrix D50 RGB sử dụng tản nhiệt kim loại chắc chắn, tích hợp đèn RGB và phù hợp với các bộ máy tính cần hiệu năng cao cùng ngoại hình nổi bật." data-img="img/Ram_adata_xpg.png" data-name="RAM ADATA XPG Spectrix D50 RGB" data-price="2.690.000đ" data-subtype="ram">
+                        Buy
+                    </button>
+</div>
+<div class="product-card" data-category="webcam" data-price-value="550000" data-product-type="webcam" data-ram-capacity="" data-resolution="hd" data-standard="usb" data-storage-capacity="">
+<div class="product-img">
+<!-- Bạn tự thêm đường dẫn ảnh vào src -->
+<img alt="Webcam Logitech C310" loading="lazy" onerror="this.onerror=null;this.src='img/placeholder-product.svg';" src="img/WebCam.png"/>
+</div>
+<h4 class="product-title">Webcam Logitech C310</h4>
+<p class="product-price">550.000đ</p>
+<button class="btn-buy" data-category="computer-accessory" data-description="Webcam Logitech C310 phù hợp cho học trực tuyến, họp từ xa và gọi video. Thiết kế nhỏ gọn, dễ lắp trên màn hình và sử dụng thuận tiện qua kết nối USB." data-img="img/WebCam.png" data-name="Webcam Logitech C310" data-price="550.000đ" data-subtype="webcam">
+                        Buy
+                    </button>
+</div>
+<!-- SẢN PHẨM 4 -->
+<div class="product-card" data-category="ram" data-price-value="750000" data-product-type="ram" data-ram-capacity="16" data-resolution="" data-standard="ddr4" data-storage-capacity="">
+<div class="product-img">
+<!-- Bạn tự thêm đường dẫn ảnh vào src -->
+<img alt="RAM Corsair Vengeance LPX DDR4" loading="lazy" onerror="this.onerror=null;this.src='img/placeholder-product.svg';" src="img/Ram_corsair_DDR4.png"/>
+</div>
+<h4 class="product-title">RAM Corsair Vengeance LPX DDR4</h4>
+<p class="product-price">750.000đ</p>
+<button class="btn-buy" data-category="computer-accessory" data-description="RAM Corsair Vengeance LPX DDR4 có thiết kế tản nhiệt thấp, tương thích với nhiều cấu hình máy tính và phù hợp cho học tập, làm việc hoặc chơi game." data-img="img/Ram_corsair_DDR4.png" data-name="RAM Corsair Vengeance LPX DDR4" data-price="750.000đ" data-subtype="ram">
+                        Buy
+                    </button>
+</div>
+<div class="product-card" data-category="ram" data-price-value="27990000" data-product-type="ram" data-ram-capacity="32" data-resolution="" data-standard="ddr5" data-storage-capacity="">
+<div class="product-img">
+<!-- Bạn tự thêm đường dẫn ảnh vào src -->
+<img alt="RAM Corsair DDR5" loading="lazy" onerror="this.onerror=null;this.src='img/placeholder-product.svg';" src="img/Ram_Corsair.png"/>
+</div>
+<h4 class="product-title">RAM Corsair DDR5</h4>
+<p class="product-price">27.990.000đ</p>
+<button class="btn-buy" data-category="computer-accessory" data-description="RAM Corsair DDR5 cung cấp băng thông cao hơn thế hệ DDR4, phù hợp cho hệ thống hiệu năng cao, xử lý đa nhiệm, đồ họa và các tác vụ nặng." data-img="img/Ram_Corsair.png" data-name="RAM Corsair DDR5" data-price="27.990.000đ" data-subtype="ram">
+                        Buy
+                    </button>
+</div>
+<!-- SẢN PHẨM 6 -->
+<div class="product-card" data-category="ram" data-price-value="7690000" data-product-type="ram" data-ram-capacity="16" data-resolution="" data-standard="ddr5" data-storage-capacity="">
+<div class="product-img">
+<!-- Bạn tự thêm đường dẫn ảnh vào src -->
+<img alt="RAM Laptop ADATA XPG 16GB DDR5 6000MHz" loading="lazy" onerror="this.onerror=null;this.src='img/placeholder-product.svg';" src="img/Ram_pc_DDR5.png"/>
+</div>
+<h4 class="product-title">RAM Laptop ADATA XPG 16GB DDR5 6000MHz</h4>
+<p class="product-price">7.690.000đ</p>
+<button class="btn-buy" data-category="computer-accessory" data-description="RAM laptop ADATA XPG dung lượng 16GB, chuẩn DDR5 và tốc độ 6000MHz phù hợp cho laptop hiệu năng cao, chơi game, lập trình và xử lý nội dung." data-img="img/Ram_pc_DDR5.png" data-name="RAM Laptop ADATA XPG 16GB DDR5 6000MHz" data-price="7.690.000đ" data-subtype="ram">
+                        Buy
+                    </button>
+</div>
+<!-- SẢN PHẨM 7 -->
+<div class="product-card" data-category="ssd" data-price-value="3899000" data-product-type="ssd" data-ram-capacity="" data-resolution="" data-standard="nvme" data-storage-capacity="500">
+<div class="product-img">
+<!-- Bạn tự thêm đường dẫn ảnh vào src -->
+<img alt="SSD Kingston NV3 500GB NVMe" loading="lazy" onerror="this.onerror=null;this.src='img/placeholder-product.svg';" src="img/SSD_kingston NV3.png"/>
+</div>
+<h4 class="product-title">SSD Kingston NV3 500GB NVMe</h4>
+<p class="product-price">3.899.000đ</p>
+<button class="btn-buy" data-category="computer-accessory" data-description="SSD Kingston NV3 dung lượng 500GB sử dụng chuẩn M.2 NVMe, giúp rút ngắn thời gian khởi động hệ điều hành, mở ứng dụng và sao chép dữ liệu." data-img="img/SSD_kingston NV3.png" data-name="SSD Kingston NV3 500GB NVMe" data-price="3.899.000đ" data-subtype="ssd">
+                        Buy
+                    </button>
+</div>
+<!-- SẢN PHẨM 9 -->
+<div class="product-card" data-category="ssd" data-price-value="3200000" data-product-type="ssd" data-ram-capacity="" data-resolution="" data-standard="nvme" data-storage-capacity="1000">
+<div class="product-img">
+<!-- Bạn tự thêm đường dẫn ảnh vào src -->
+<img alt="SSD Samsung 990 PRO 1TB NVMe" loading="lazy" onerror="this.onerror=null;this.src='img/placeholder-product.svg';" src="img/SSD_samsum.png"/>
+</div>
+<h4 class="product-title">SSD Samsung 990 PRO 1TB NVMe</h4>
+<p class="product-price">3.200.000đ</p>
+<button class="btn-buy" data-category="computer-accessory" data-description="SSD Samsung 990 PRO dung lượng 1TB sử dụng chuẩn M.2 NVMe, phù hợp cho chơi game, đồ họa, xử lý dữ liệu và các hệ thống cần tốc độ truy xuất cao." data-img="img/SSD_samsum.png" data-name="SSD Samsung 990 PRO 1TB NVMe" data-price="3.200.000đ" data-subtype="ssd">
+                        Buy
+                    </button>
+</div>
+<!-- SẢN PHẨM 10 -->
+<div class="product-card" data-category="ssd" data-price-value="5350000" data-product-type="ssd" data-ram-capacity="" data-resolution="" data-standard="usb" data-storage-capacity="1000">
+<div class="product-img">
+<!-- Bạn tự thêm đường dẫn ảnh vào src -->
+<img alt="SSD SanDisk Extreme Portable 1TB" loading="lazy" onerror="this.onerror=null;this.src='img/placeholder-product.svg';" src="img/SSD_sandisk.png"/>
+</div>
+<h4 class="product-title">SSD SanDisk Extreme Portable 1TB</h4>
+<p class="product-price">5.350.000đ</p>
+<button class="btn-buy" data-category="computer-accessory" data-description="SSD SanDisk Extreme Portable dung lượng 1TB là ổ lưu trữ di động nhỏ gọn, phù hợp sao lưu dữ liệu, mang theo tài liệu và sử dụng với nhiều thiết bị." data-img="img/SSD_sandisk.png" data-name="SSD SanDisk Extreme Portable 1TB" data-price="5.350.000đ" data-subtype="ssd">
+                        Buy
+                    </button>
+</div>
+<div class="product-card" data-category="ssd" data-price-value="1690000" data-product-type="ssd" data-ram-capacity="" data-resolution="" data-standard="sata" data-storage-capacity="256">
+<div class="product-img">
+<!-- Bạn tự thêm đường dẫn ảnh vào src -->
+<img alt="SSD VSP 256GB SATA" loading="lazy" onerror="this.onerror=null;this.src='img/placeholder-product.svg';" src="img/SSD_VSP.png"/>
+</div>
+<h4 class="product-title">SSD VSP 256GB SATA</h4>
+<p class="product-price">1.690.000đ</p>
+<button class="btn-buy" data-category="computer-accessory" data-description="SSD VSP dung lượng 256GB sử dụng chuẩn SATA, phù hợp nâng cấp máy tính văn phòng hoặc laptop phổ thông để cải thiện tốc độ khởi động và mở ứng dụng." data-img="img/SSD_VSP.png" data-name="SSD VSP 256GB SATA" data-price="1.690.000đ" data-subtype="ssd">
+                        Buy
+                    </button>
+</div>
+<!-- SẢN PHẨM 11 -->
+<div class="product-card" data-category="ssd" data-price-value="3190000" data-product-type="ssd" data-ram-capacity="" data-resolution="" data-standard="nvme" data-storage-capacity="1000">
+<div class="product-img">
+<!-- Bạn tự thêm đường dẫn ảnh vào src -->
+<img alt="SSD Western Digital Blue SN5000 1TB" loading="lazy" onerror="this.onerror=null;this.src='img/placeholder-product.svg';" src="img/SSD_WB_BLUE.png"/>
+</div>
+<h4 class="product-title">SSD Western Digital Blue SN5000 1TB</h4>
+<p class="product-price">3.190.000đ</p>
+<button class="btn-buy" data-category="computer-accessory" data-description="SSD Western Digital Blue SN5000 dung lượng 1TB sử dụng chuẩn M.2 NVMe, phù hợp cho học tập, làm việc, sáng tạo nội dung và lưu trữ dữ liệu dung lượng lớn." data-img="img/SSD_WB_BLUE.png" data-name="SSD Western Digital Blue SN5000 1TB" data-price="3.190.000đ" data-subtype="ssd">
+                        Buy
+                    </button>
+</div>
+<!-- SẢN PHẨM 12 -->
+<div class="product-card" data-category="ssd" data-price-value="5990000" data-product-type="ssd" data-ram-capacity="" data-resolution="" data-standard="nvme" data-storage-capacity="1000">
+<div class="product-img">
+<!-- Bạn tự thêm đường dẫn ảnh vào src -->
+<img alt="SSD Kioxia Exceria NVMe 1TB" loading="lazy" onerror="this.onerror=null;this.src='img/placeholder-product.svg';" src="img/O_cung_ssd.png"/>
+</div>
+<h4 class="product-title">SSD Kioxia Exceria NVMe 1TB</h4>
+<p class="product-price">5.990.000đ</p>
+<button class="btn-buy" data-category="computer-accessory" data-description="SSD Kioxia Exceria dung lượng 1TB sử dụng chuẩn M.2 NVMe, giúp tăng tốc khởi động hệ điều hành, mở ứng dụng và xử lý dữ liệu hằng ngày." data-img="img/O_cung_ssd.png" data-name="SSD Kioxia Exceria NVMe 1TB" data-price="5.990.000đ" data-subtype="ssd">
+                        Buy
+                    </button>
+</div>
+</div>
+</main>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const buyButtons = document.querySelectorAll(".btn-buy");
+    const searchInput = document.getElementById("searchInput");
+    const productCards = Array.from(
+        document.querySelectorAll(".product-card")
+    );
+    const quickFilters = document.querySelectorAll(".q-filter");
+
+    const sidebarInputs = Array.from(
+        document.querySelectorAll(".sidebar-filter-input")
+    );
+
+    const applySidebarFiltersButton =
+        document.getElementById("applySidebarFilters");
+
+    const resetSidebarFiltersButton =
+        document.getElementById("resetSidebarFilters");
+
+    const clearAllFiltersButton =
+        document.getElementById("clearAllFiltersButton");
+
+    const selectedFilterTags =
+        document.getElementById("selectedFilterTags");
+
+    const activeFilterCount =
+        document.getElementById("activeFilterCount");
+
+    const filterResultText =
+        document.getElementById("filterResultText");
+
+    const minPriceRange =
+        document.getElementById("minPriceRange");
+
+    const maxPriceRange =
+        document.getElementById("maxPriceRange");
+
+    const minPriceLabel =
+        document.getElementById("minPriceLabel");
+
+    const maxPriceLabel =
+        document.getElementById("maxPriceLabel");
+
+    const priceRangeFill =
+        document.getElementById("priceRangeFill");
+
+    const DEFAULT_MIN_PRICE = 0;
+    const DEFAULT_MAX_PRICE = 30000000;
+    const MIN_PRICE_GAP = 100000;
+
+    let activeQuickFilter = "all";
+
+    let appliedFilters = {
+        productTypes: [],
+        ramCapacities: [],
+        storageCapacities: [],
+        standards: [],
+        resolutions: [],
+        minPrice: DEFAULT_MIN_PRICE,
+        maxPrice: DEFAULT_MAX_PRICE
+    };
+
+    function formatCurrency(value) {
+        return new Intl.NumberFormat("vi-VN").format(value) + "đ";
+    }
+
+    function getCheckedValues(name) {
+        return Array.from(
+            document.querySelectorAll(
+                'input[name="' + name + '"]:checked'
+            )
+        ).map(function (input) {
+            return input.value;
+        });
+    }
+
+    function readSidebarFilters() {
+        return {
+            productTypes: getCheckedValues("product-type"),
+            ramCapacities: getCheckedValues("ram-capacity"),
+            storageCapacities: getCheckedValues("storage-capacity"),
+            standards: getCheckedValues("standard"),
+            resolutions: getCheckedValues("resolution"),
+            minPrice: Number(minPriceRange.value),
+            maxPrice: Number(maxPriceRange.value)
+        };
+    }
+
+    function arrayMatches(selectedValues, productValue) {
+        if (selectedValues.length === 0) {
+            return true;
+        }
+
+        return selectedValues.includes(productValue);
+    }
+
+    function productMatchesFilters(card) {
+        const title = card
+            .querySelector(".product-title")
+            .textContent
+            .toLowerCase();
+
+        const keyword = searchInput.value
+            .toLowerCase()
+            .trim();
+
+        const productType =
+            card.dataset.productType || "";
+
+        const ramCapacity =
+            card.dataset.ramCapacity || "";
+
+        const storageCapacity =
+            card.dataset.storageCapacity || "";
+
+        const standard =
+            card.dataset.standard || "";
+
+        const resolution =
+            card.dataset.resolution || "";
+
+        const productPrice =
+            Number(card.dataset.priceValue || 0);
+
+        const matchesSearch =
+            keyword === "" || title.includes(keyword);
+
+        const matchesQuickFilter =
+            activeQuickFilter === "all" ||
+            productType === activeQuickFilter;
+
+        const matchesProductType =
+            arrayMatches(
+                appliedFilters.productTypes,
+                productType
+            );
+
+        const matchesRamCapacity =
+            arrayMatches(
+                appliedFilters.ramCapacities,
+                ramCapacity
+            );
+
+        const matchesStorageCapacity =
+            arrayMatches(
+                appliedFilters.storageCapacities,
+                storageCapacity
+            );
+
+        const matchesStandard =
+            arrayMatches(
+                appliedFilters.standards,
+                standard
+            );
+
+        const matchesResolution =
+            arrayMatches(
+                appliedFilters.resolutions,
+                resolution
+            );
+
+        const matchesPrice =
+            productPrice >= appliedFilters.minPrice &&
+            productPrice <= appliedFilters.maxPrice;
+
+        return (
+            matchesSearch &&
+            matchesQuickFilter &&
+            matchesProductType &&
+            matchesRamCapacity &&
+            matchesStorageCapacity &&
+            matchesStandard &&
+            matchesResolution &&
+            matchesPrice
+        );
+    }
+
+    function getActiveSidebarFilterCount() {
+        const checkboxCount =
+            appliedFilters.productTypes.length +
+            appliedFilters.ramCapacities.length +
+            appliedFilters.storageCapacities.length +
+            appliedFilters.standards.length +
+            appliedFilters.resolutions.length;
+
+        const usesCustomPrice =
+            appliedFilters.minPrice !== DEFAULT_MIN_PRICE ||
+            appliedFilters.maxPrice !== DEFAULT_MAX_PRICE;
+
+        return checkboxCount + (usesCustomPrice ? 1 : 0);
+    }
+
+    function updateResultText(visibleCount) {
+        filterResultText.textContent =
+            "Hiển thị " +
+            visibleCount +
+            " / " +
+            productCards.length +
+            " sản phẩm";
+
+        const hasAnyFilter =
+            getActiveSidebarFilterCount() > 0 ||
+            activeQuickFilter !== "all" ||
+            searchInput.value.trim() !== "";
+
+        clearAllFiltersButton.hidden = !hasAnyFilter;
+    }
+
+    function renderProducts() {
+        let visibleCount = 0;
+
+        productCards.forEach(function (card) {
+            const shouldShow = productMatchesFilters(card);
+
+            card.hidden = !shouldShow;
+            card.style.display = shouldShow ? "" : "none";
+
+            if (shouldShow) {
+                visibleCount++;
+            }
+        });
+
+        updateResultText(visibleCount);
+    }
+
+    function createFilterTag(label, groupName, value) {
+        const tag = document.createElement("span");
+        tag.className = "tag applied-filter-tag";
+        tag.dataset.group = groupName;
+        tag.dataset.value = value;
+
+        const labelText = document.createElement("span");
+        labelText.textContent = label;
+
+        const removeButton = document.createElement("button");
+        removeButton.type = "button";
+        removeButton.className = "remove-applied-filter";
+        removeButton.setAttribute(
+            "aria-label",
+            "Bỏ bộ lọc " + label
+        );
+        removeButton.textContent = "×";
+
+        tag.appendChild(labelText);
+        tag.appendChild(removeButton);
+
+        return tag;
+    }
+
+    function renderSelectedFilterTags() {
+        selectedFilterTags.innerHTML = "";
+
+        const checkedInputs = sidebarInputs.filter(function (input) {
+            return input.checked;
+        });
+
+        checkedInputs.forEach(function (input) {
+            selectedFilterTags.appendChild(
+                createFilterTag(
+                    input.dataset.label,
+                    input.name,
+                    input.value
+                )
+            );
+        });
+
+        const usesCustomPrice =
+            appliedFilters.minPrice !== DEFAULT_MIN_PRICE ||
+            appliedFilters.maxPrice !== DEFAULT_MAX_PRICE;
+
+        if (usesCustomPrice) {
+            selectedFilterTags.appendChild(
+                createFilterTag(
+                    formatCurrency(appliedFilters.minPrice) +
+                        " - " +
+                        formatCurrency(appliedFilters.maxPrice),
+                    "price",
+                    "custom"
+                )
+            );
+        }
+
+        if (!selectedFilterTags.children.length) {
+            const emptyTag = document.createElement("span");
+            emptyTag.className = "filter-empty-tag";
+            emptyTag.textContent = "Chưa chọn bộ lọc";
+            selectedFilterTags.appendChild(emptyTag);
+        }
+
+        activeFilterCount.textContent =
+            getActiveSidebarFilterCount();
+    }
+
+    function updatePriceRangeInterface(changedRange) {
+        let minValue = Number(minPriceRange.value);
+        let maxValue = Number(maxPriceRange.value);
+
+        if (maxValue - minValue < MIN_PRICE_GAP) {
+            if (changedRange === "min") {
+                minValue = maxValue - MIN_PRICE_GAP;
+                minPriceRange.value = String(minValue);
+            } else {
+                maxValue = minValue + MIN_PRICE_GAP;
+                maxPriceRange.value = String(maxValue);
+            }
+        }
+
+        const rangeMaximum = Number(maxPriceRange.max);
+        const leftPercent =
+            (minValue / rangeMaximum) * 100;
+
+        const rightPercent =
+            (maxValue / rangeMaximum) * 100;
+
+        minPriceLabel.textContent = formatCurrency(minValue);
+        maxPriceLabel.textContent = formatCurrency(maxValue);
+
+        priceRangeFill.style.left = leftPercent + "%";
+        priceRangeFill.style.width =
+            rightPercent - leftPercent + "%";
+    }
+
+    function applySidebarFilters() {
+        appliedFilters = readSidebarFilters();
+
+        renderSelectedFilterTags();
+        renderProducts();
+    }
+
+    function resetAllFilters() {
+        sidebarInputs.forEach(function (input) {
+            input.checked = false;
+        });
+
+        minPriceRange.value = String(DEFAULT_MIN_PRICE);
+        maxPriceRange.value = String(DEFAULT_MAX_PRICE);
+
+        activeQuickFilter = "all";
+        searchInput.value = "";
+
+        quickFilters.forEach(function (filter) {
+            filter.classList.toggle(
+                "active",
+                filter.dataset.filter === "all"
+            );
+        });
+
+        appliedFilters = readSidebarFilters();
+
+        updatePriceRangeInterface();
+        renderSelectedFilterTags();
+        renderProducts();
+    }
+
+    buyButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            localStorage.setItem(
+                "prod_name",
+                this.getAttribute("data-name")
+            );
+
+            localStorage.setItem(
+                "prod_price",
+                this.getAttribute("data-price")
+            );
+
+            localStorage.setItem(
+                "prod_img",
+                this.getAttribute("data-img")
+            );
+
+            localStorage.setItem(
+                "prod_desc",
+                this.getAttribute("data-description")
+            );
+
+            localStorage.setItem(
+                "prod_category",
+                this.getAttribute("data-category") ||
+                    "computer-accessory"
+            );
+
+            localStorage.setItem(
+                "prod_subtype",
+                this.getAttribute("data-subtype") || ""
+            );
+
+            window.location.href = "chitietsanpham.html";
+        });
+    });
+
+    searchInput.addEventListener("input", renderProducts);
+
+    quickFilters.forEach(function (filter) {
+        filter.addEventListener("click", function () {
+            quickFilters.forEach(function (item) {
+                item.classList.remove("active");
+            });
+
+            this.classList.add("active");
+            activeQuickFilter = this.dataset.filter;
+
+            renderProducts();
+        });
+    });
+
+    minPriceRange.addEventListener("input", function () {
+        updatePriceRangeInterface("min");
+    });
+
+    maxPriceRange.addEventListener("input", function () {
+        updatePriceRangeInterface("max");
+    });
+
+    applySidebarFiltersButton.addEventListener(
+        "click",
+        applySidebarFilters
+    );
+
+    resetSidebarFiltersButton.addEventListener(
+        "click",
+        resetAllFilters
+    );
+
+    clearAllFiltersButton.addEventListener(
+        "click",
+        resetAllFilters
+    );
+
+    selectedFilterTags.addEventListener(
+        "click",
+        function (event) {
+            const removeButton = event.target.closest(
+                ".remove-applied-filter"
+            );
+
+            if (!removeButton) {
+                return;
+            }
+
+            const tag = removeButton.closest(".applied-filter-tag");
+            const groupName = tag.dataset.group;
+            const value = tag.dataset.value;
+
+            if (groupName === "price") {
+                minPriceRange.value = String(DEFAULT_MIN_PRICE);
+                maxPriceRange.value = String(DEFAULT_MAX_PRICE);
+                updatePriceRangeInterface();
+            } else {
+                const relatedInput = document.querySelector(
+                    'input[name="' +
+                        groupName +
+                        '"][value="' +
+                        value +
+                        '"]'
+                );
+
+                if (relatedInput) {
+                    relatedInput.checked = false;
+                }
+            }
+
+            applySidebarFilters();
+        }
+    );
+
+    updatePriceRangeInterface();
+    renderSelectedFilterTags();
+    renderProducts();
+});
+</script></body>
+</html>
