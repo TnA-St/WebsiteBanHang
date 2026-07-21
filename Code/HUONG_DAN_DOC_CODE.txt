@@ -1,0 +1,39 @@
+HƯỚNG DẪN ĐỌC BẢN CODE CÓ GHI CHÚ
+=========================================
+
+1. MỞ WEBSITE
+- Mở file index.html bằng Chrome/Edge.
+- Các file HTML liên kết với nhau bằng thuộc tính href.
+
+2. CÁC LOẠI GHI CHÚ
+- HTML: <!-- nội dung ghi chú -->
+- CSS:  /* nội dung ghi chú */
+- JavaScript: // ghi chú một dòng hoặc /* ghi chú nhiều dòng */
+Các ghi chú không hiển thị trên website và không làm thay đổi chức năng.
+
+3. Ý NGHĨA CÁC THƯ MỤC
+- img/: ảnh sản phẩm.
+- icon/: icon menu và icon Buy.
+- css/: các file định dạng màu sắc, kích thước và bố cục.
+
+4. CÁC FILE QUAN TRỌNG
+- index.html: trang chủ và danh mục sản phẩm.
+- dienthoai.html, laptop.html, phukien.html, phukienmaytinh.html: trang danh sách + bộ lọc.
+- chitietsanpham.html: trang chi tiết và form đặt hàng.
+- css/style.css: CSS dùng chung.
+- css/icons.css: phần icon đã thêm, được ghi chú gần như từng câu lệnh.
+
+5. CÁC KHÁI NIỆM CẦN NHỚ
+- class: dùng chung cho nhiều phần tử, CSS chọn bằng dấu chấm, ví dụ .btn-buy.
+- id: tên duy nhất của một phần tử, JavaScript thường tìm bằng getElementById.
+- data-*: dữ liệu riêng trong HTML, JavaScript đọc bằng dataset.
+- addEventListener: chờ một hành động như click, gõ chữ, kéo thanh giá.
+- localStorage: lưu dữ liệu trong trình duyệt để trang khác đọc lại.
+- querySelector/querySelectorAll: tìm phần tử HTML theo cú pháp CSS.
+- function: nhóm lệnh có thể gọi lại nhiều lần.
+- const: biến không được gán lại; let: biến có thể thay đổi.
+
+6. LƯU Ý
+- Đăng nhập/đăng ký hiện chỉ là giao diện HTML; chưa kiểm tra tài khoản bằng server.
+- Dữ liệu đặt hàng hiện lưu ở localStorage của trình duyệt, chưa gửi vào cơ sở dữ liệu.
+- Font Awesome trong trang chi tiết được tải từ Internet; khi mất mạng icon tim/mũi tên có thể không hiện.

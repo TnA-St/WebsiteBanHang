@@ -1,0 +1,72 @@
+/*
+================================================================
+FILE: menu-active.css
+MỤC ĐÍCH: Hiệu ứng làm nổi mục menu của trang hiện tại.
+
+CÁCH ĐỌC CSS:
+- .ten-class chọn phần tử có class="ten-class".
+- #ten-id chọn phần tử có id="ten-id".
+- selector { thuộc-tính: giá-trị; } là cấu trúc một quy tắc CSS.
+- display: flex dùng để xếp phần tử theo hàng/cột linh hoạt.
+- display: grid dùng để tạo lưới hàng và cột.
+- margin là khoảng cách bên ngoài; padding là khoảng cách bên trong.
+- width/height là chiều rộng/chiều cao.
+- border-radius bo tròn góc; box-shadow tạo bóng.
+- @media thay đổi giao diện theo kích thước màn hình.
+- Ghi chú CSS chỉ để giải thích và không ảnh hưởng tới giao diện.
+================================================================
+*/
+
+/* Chuẩn bị hiệu ứng cho các liên kết menu thông thường */
+.menu-chinh a:not(.btn-orange):not(.btn-blue) {
+    position: relative;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Hiệu ứng khi rê chuột nhưng chưa phải trang hiện tại */
+.menu-chinh a:not(.btn-orange):not(.btn-blue):hover {
+    background-color: rgba(76, 175, 80, 0.16);
+    color: #174d29;
+}
+
+/* Trang người dùng đang mở */
+.menu-chinh a.current-page:not(.btn-orange):not(.btn-blue),
+.menu-chinh a[aria-current="page"]:not(.btn-orange):not(.btn-blue) {
+    color: #ffffff !important;
+    background-color: #3f9c5a !important;
+    font-weight: 700;
+    box-shadow:
+        0 3px 9px rgba(27, 94, 32, 0.24),
+        inset 0 -3px 0 rgba(0, 0, 0, 0.13);
+    transform: translateY(-1px);
+}
+
+/* Vạch nhỏ bên dưới giúp nhận biết rõ hơn */
+.menu-chinh a.current-page:not(.btn-orange):not(.btn-blue)::after,
+.menu-chinh a[aria-current="page"]:not(.btn-orange):not(.btn-blue)::after {
+    content: "";
+    position: absolute;
+    right: 12px;
+    bottom: 2px;
+    left: 12px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Khi rê chuột lên đúng trang hiện tại vẫn giữ màu đậm */
+.menu-chinh a.current-page:not(.btn-orange):not(.btn-blue):hover,
+.menu-chinh a[aria-current="page"]:not(.btn-orange):not(.btn-blue):hover {
+    color: #ffffff !important;
+    background-color: #34844b !important;
+}
+
+/* Hỗ trợ người dùng điều hướng bằng bàn phím */
+.menu-chinh a:focus-visible {
+    outline: 3px solid rgba(64, 179, 231, 0.45);
+    outline-offset: 3px;
+}

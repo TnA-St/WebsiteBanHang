@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--
+    ================================================================
+    FILE: Dangnhap.html
+    MỤC ĐÍCH: Trang giao diện đăng nhập. Hiện tại là HTML tĩnh, chưa có PHP/cơ sở dữ liệu để xác thực.
+
+    CÁCH ĐỌC NHANH:
+    - Thẻ HTML như <header>, <main>, <section> tạo cấu trúc nội dung.
+    - class="..." dùng để CSS định dạng nhiều phần tử cùng kiểu.
+    - id="..." là tên duy nhất để JavaScript tìm và điều khiển phần tử.
+    - data-* là dữ liệu riêng gắn vào HTML để JavaScript đọc bằng element.dataset.
+    - Các dòng ghi chú HTML chỉ để giải thích, không hiển thị trên trang web.
+    ================================================================
+-->
+
+<html lang="vi">
+<head>
+<!-- Phần <head> khai báo mã hóa, cách hiển thị trên điện thoại, tiêu đề và các file CSS. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Đăng Nhập</title>
+
+    <!-- Hai trang cùng sử dụng một file CSS -->
+    <link rel="stylesheet" href="css/auth.css">
+    <!-- icons.css căn kích thước/vị trí icon trên menu và nút Buy. -->
+    <link rel="stylesheet" href="css/icons.css">
+</head>
+<body>
+<!-- Phần <body> chứa toàn bộ nội dung nhìn thấy và tương tác được trên trang. -->
+
+    <!-- HEADER/NAVBAR: thanh điều hướng dùng chung ở phía trên website. -->
+<header class="navbar">
+        <!-- Logo đã đồng nhất với những trang còn lại -->
+        <div class="logo">
+            <a href="index.html" class="logo-box" title="Về trang chủ">
+                💻
+            </a>
+        </div>
+
+        <!--
+    MENU CHÍNH:
+    - href: đường dẫn mở trang khác.
+    - class="active": tô nền mục của trang hiện tại.
+    - <img class="menu-icon">: ảnh biểu tượng; kích thước được quy định trong css/icons.css.
+    - alt="" và aria-hidden="true": icon chỉ để trang trí, trình đọc màn hình sẽ bỏ qua.
+-->
+<nav class="menu-chinh">
+            <a href="index.html"><img class="menu-icon" src="icon/trang chủ.png" alt="" aria-hidden="true">Trang chủ</a>
+            <a href="gioithieu.html"><img class="menu-icon" src="icon/giới thiệu.png" alt="" aria-hidden="true">Giới thiệu</a>
+
+            <!-- Không còn class active đặt sai -->
+            <a href="phukien.html"><img class="menu-icon" src="icon/phụ kiện điện thoại.png" alt="" aria-hidden="true">Phụ kiện Điện Thoại</a>
+
+            <a href="dienthoai.html"><img class="menu-icon" src="icon/iphone.png" alt="" aria-hidden="true">Điện thoại</a>
+            <a href="laptop.html"><img class="menu-icon" src="icon/laptop.png" alt="" aria-hidden="true">LapTop</a>
+            <a href="phukienmaytinh.html"><img class="menu-icon" src="icon/computer.png" alt="" aria-hidden="true">Phụ kiện Máy tính</a>
+            <a href="Dangnhap.html" class="btn-orange">Đăng nhập</a>
+            <a href="DangKy.html" class="btn-blue">Đăng ký</a>
+        </nav>
+    </header>
+
+    <!-- MAIN: nội dung chính và riêng biệt của trang. -->
+
+    <main>
+        <div class="title-container">
+            <h1>Đăng Nhập</h1>
+            <p>Tài khoản bán hàng</p>
+        </div>
+
+        <div class="form-card">
+            <!--
+    FORM HTML:
+    - method="post" là cách gửi dữ liệu không hiện trên URL.
+    - action="#" nghĩa là bản tĩnh này chưa gửi dữ liệu tới PHP/server thật.
+    - required buộc người dùng nhập ô đó trước khi trình duyệt cho gửi form.
+-->
+<form action="#" method="post">
+                <div class="form-group">
+                    <label for="loginUsername">Tên tài khoản</label>
+
+                    <input
+                        type="text"
+                        id="loginUsername"
+                        name="username"
+                        placeholder="Value"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Mật khẩu</label>
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        name="password"
+                        placeholder="Value"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    Đăng nhập
+                </button>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+/*
+================================================================
+FILE: icons.css
+MỤC ĐÍCH: Căn icon trên menu và nút Buy/Mua.
+================================================================
+*/
+
+/* Chọn tất cả liên kết <a> nằm trong phần tử có class="menu-chinh". */
+.menu-chinh a {
+    display: inline-flex;       /* Cho icon và chữ nằm cùng một hàng, nhưng link vẫn gọn theo nội dung. */
+    align-items: center;        /* Căn icon và chữ theo giữa chiều dọc. */
+    justify-content: center;    /* Căn nội dung vào giữa chiều ngang của link. */
+    gap: 7px;                   /* Tạo khoảng cách 7px giữa icon và chữ. */
+    white-space: nowrap;        /* Không cho chữ trong một mục menu tự xuống dòng. */
+}
+
+/* Chọn ảnh có class="menu-icon" nằm bên trong menu. */
+.menu-chinh .menu-icon {
+    width: 20px;                /* Chiều rộng icon. */
+    height: 20px;               /* Chiều cao icon. */
+    flex: 0 0 20px;             /* Không cho icon co/giãn; giữ kích thước cơ sở 20px. */
+    display: block;             /* Bỏ khoảng trắng mặc định dưới ảnh dạng inline. */
+    object-fit: contain;        /* Giữ đủ hình trong khung 20x20, không làm méo ảnh. */
+}
+
+/* Hai loại nút mua cùng dùng một kiểu căn icon và chữ. */
+.btn-buy,
+.btn-submit-buy {
+    display: inline-flex;       /* Đặt icon giỏ hàng và chữ Buy/Mua cùng một hàng. */
+    align-items: center;        /* Căn giữa theo chiều dọc. */
+    justify-content: center;    /* Căn giữa theo chiều ngang. */
+    gap: 7px;                   /* Khoảng cách giữa icon và chữ. */
+}
+
+/* Chọn ảnh icon giỏ hàng nằm trong nút mua. */
+.btn-buy .buy-icon,
+.btn-submit-buy .buy-icon {
+    width: 19px;                /* Chiều rộng icon giỏ hàng. */
+    height: 19px;               /* Chiều cao icon giỏ hàng. */
+    flex: 0 0 19px;             /* Giữ icon luôn ở kích thước 19px. */
+    display: block;             /* Giúp căn ảnh chính xác hơn. */
+    object-fit: contain;        /* Không kéo méo ảnh. */
+    filter: invert(1);          /* Đảo màu ảnh, biến icon tối thành sáng để hợp nền nút đen. */
+    opacity: 0.88;              /* Làm icon hơi trong để nhìn mềm hơn. */
+}
+
+/* Chỉ áp dụng khi chiều rộng màn hình từ 1180px trở xuống. */
+@media (max-width: 1180px) {
+    .navbar {
+        align-items: flex-start; /* Khi menu xuống dòng, căn navbar từ mép trên. */
+    }
+
+    .menu-chinh {
+        flex-wrap: wrap;         /* Cho phép các mục menu tự xuống hàng khi không đủ chỗ. */
+        justify-content: flex-end; /* Căn các hàng menu về bên phải. */
+        row-gap: 8px;            /* Khoảng cách dọc giữa hai hàng menu. */
+    }
+}

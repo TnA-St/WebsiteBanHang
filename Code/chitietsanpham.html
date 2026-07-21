@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<!--
+    ================================================================
+    FILE: chitietsanpham.html
+    MỤC ĐÍCH: Trang chi tiết: đọc sản phẩm đã chọn từ localStorage, cho chọn cấu hình và nhập thông tin đặt hàng.
+
+    CÁCH ĐỌC NHANH:
+    - Thẻ HTML như <header>, <main>, <section> tạo cấu trúc nội dung.
+    - class="..." dùng để CSS định dạng nhiều phần tử cùng kiểu.
+    - id="..." là tên duy nhất để JavaScript tìm và điều khiển phần tử.
+    - data-* là dữ liệu riêng gắn vào HTML để JavaScript đọc bằng element.dataset.
+    - Các dòng ghi chú HTML chỉ để giải thích, không hiển thị trên trang web.
+    ================================================================
+-->
+
+<html lang="vi">
+<head>
+<!-- Phần <head> khai báo mã hóa, cách hiển thị trên điện thoại, tiêu đề và các file CSS. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chi Tiết Sản Phẩm</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Font Awesome được tải qua Internet để hiển thị icon tim và mũi tên. -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    >
+    <!-- icons.css căn kích thước/vị trí icon trên menu và nút Buy. -->
+    <link rel="stylesheet" href="css/icons.css">
+</head>
+<body>
+<!-- Phần <body> chứa toàn bộ nội dung nhìn thấy và tương tác được trên trang. -->
+
+    <!-- HEADER/NAVBAR: thanh điều hướng dùng chung ở phía trên website. -->
+<header class="navbar">
+        <div class="logo">
+            <div class="logo-box">💻</div>
+        </div>
+
+        <!--
+    MENU CHÍNH:
+    - href: đường dẫn mở trang khác.
+    - class="active": tô nền mục của trang hiện tại.
+    - <img class="menu-icon">: ảnh biểu tượng; kích thước được quy định trong css/icons.css.
+    - alt="" và aria-hidden="true": icon chỉ để trang trí, trình đọc màn hình sẽ bỏ qua.
+-->
+<nav class="menu-chinh">
+            <a href="index.html"><img class="menu-icon" src="icon/trang chủ.png" alt="" aria-hidden="true">Trang chủ</a>
+            <a href="gioithieu.html"><img class="menu-icon" src="icon/giới thiệu.png" alt="" aria-hidden="true">Giới thiệu</a>
+            <a href="phukien.html" data-menu-category="phone-accessory"><img class="menu-icon" src="icon/phụ kiện điện thoại.png" alt="" aria-hidden="true">Phụ kiện Điện Thoại</a>
+            <a href="dienthoai.html" data-menu-category="phone"><img class="menu-icon" src="icon/iphone.png" alt="" aria-hidden="true">Điện thoại</a>
+            <a href="laptop.html" data-menu-category="laptop"><img class="menu-icon" src="icon/laptop.png" alt="" aria-hidden="true">LapTop</a>
+            <a href="phukienmaytinh.html" data-menu-category="computer-accessory"><img class="menu-icon" src="icon/computer.png" alt="" aria-hidden="true">Phụ kiện Máy tính</a>
+            <a href="Dangnhap.html" class="btn-orange">Đăng nhập</a>
+            <a href="DangKy.html" class="btn-blue">Đăng ký</a>
+        </nav>
+    </header>
+
+    <!-- MAIN: nội dung chính và riêng biệt của trang. -->
+
+    <main class="product-detail-container">
+
+        <section class="detail-left">
+            <button
+                class="favorite-icon"
+                id="favoriteButton"
+                type="button"
+                aria-label="Thêm vào yêu thích"
+            >
+                <i class="fa-regular fa-heart"></i>
+            </button>
+
+            <img
+                id="detail-img"
+                src=""
+                alt="Hình sản phẩm"
+            >
+        </section>
+
+        <section class="detail-right">
+            <h1 id="detail-title" class="detail-name">
+                Tên sản phẩm
+            </h1>
+
+            <span id="detail-tag" class="detail-tag">
+                Sản phẩm
+            </span>
+
+            <div class="detail-price-box">
+                <span id="detail-price">0đ</span>
+            </div>
+
+            <p id="detail-summary" class="detail-text-placeholder">
+                Vui lòng lựa chọn cấu hình phù hợp.
+            </p>
+
+            <!-- Hai ô lựa chọn sẽ được JavaScript tạo tự động -->
+            <div class="options-container" id="optionsContainer"></div>
+
+            <button class="btn-submit-buy" id="buyNowButton" type="button">
+                <img class="buy-icon" src="icon/Buy.png" alt="" aria-hidden="true">
+                <span>Mua</span>
+            </button>
+
+            <p
+                id="purchaseMessage"
+                role="status"
+                style="display: none; margin: -12px 0 20px; color: #1b5e20;"
+            ></p>
+
+            <div class="accordion-details">
+                <button
+                    class="accordion-header"
+                    id="accordionButton"
+                    type="button"
+                    aria-expanded="true"
+                >
+                    <span id="detail-toggle-name" style="font-weight: 600;">
+                        Thông số sản phẩm
+                    </span>
+
+                    <i
+                        id="accordionIcon"
+                        class="fa-solid fa-chevron-up"
+                    ></i>
+                </button>
+
+                <div class="accordion-content" id="accordionContent">
+                    <p id="detail-desc">
+                        Đang tải mô tả sản phẩm...
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- HỘP THOẠI NHẬP THÔNG TIN ĐẶT HÀNG -->
+    <div
+        class="order-modal"
+        id="orderModal"
+        aria-hidden="true"
+        hidden
+    >
+        <div
+            class="order-modal-backdrop"
+            data-close-order-modal
+        ></div>
+
+        <section
+            class="order-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="orderModalTitle"
+        >
+            <button
+                class="order-modal-close"
+                id="closeOrderModalButton"
+                type="button"
+                aria-label="Đóng biểu mẫu đặt hàng"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="order-dialog-heading">
+                <p class="order-dialog-label">THÔNG TIN KHÁCH HÀNG</p>
+                <h2 id="orderModalTitle">Đặt mua sản phẩm</h2>
+                <p>
+                    Vui lòng nhập đầy đủ thông tin để cửa hàng liên hệ xác nhận.
+                </p>
+            </div>
+
+            <div class="order-product-summary">
+                <div>
+                    <span>Sản phẩm</span>
+                    <strong id="orderProductName">Tên sản phẩm</strong>
+                </div>
+
+                <div>
+                    <span>Giá</span>
+                    <strong id="orderProductPrice">0đ</strong>
+                </div>
+
+                <p id="orderSelectedOptions"></p>
+            </div>
+
+            <form class="order-form" id="orderForm">
+                <div class="order-form-group">
+                    <label for="customerName">
+                        Họ và tên <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                        id="customerName"
+                        name="customerName"
+                        type="text"
+                        placeholder="Ví dụ: Nguyễn Văn An"
+                        autocomplete="name"
+                        minlength="2"
+                        required
+                    >
+                </div>
+
+                <div class="order-form-row">
+                    <div class="order-form-group">
+                        <label for="customerPhone">
+                            Số điện thoại <span aria-hidden="true">*</span>
+                        </label>
+                        <input
+                            id="customerPhone"
+                            name="customerPhone"
+                            type="tel"
+                            inputmode="tel"
+                            placeholder="Ví dụ: 0912345678"
+                            autocomplete="tel"
+                            required
+                        >
+                        <small id="phoneError" class="order-field-error"></small>
+                    </div>
+
+                    <div class="order-form-group">
+                        <label for="customerEmail">
+                            Email <span aria-hidden="true">*</span>
+                        </label>
+                        <input
+                            id="customerEmail"
+                            name="customerEmail"
+                            type="email"
+                            placeholder="vidu@gmail.com"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="order-form-group">
+                    <label for="customerAddress">
+                        Địa chỉ nhận hàng <span aria-hidden="true">*</span>
+                    </label>
+                    <textarea
+                        id="customerAddress"
+                        name="customerAddress"
+                        rows="4"
+                        placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố"
+                        autocomplete="street-address"
+                        minlength="8"
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="order-form-actions">
+                    <button
+                        class="btn-order-cancel"
+                        id="cancelOrderButton"
+                        type="button"
+                    >
+                        Hủy
+                    </button>
+
+                    <button
+                        class="btn-order-confirm"
+                        type="submit"
+                    >
+                        Xác nhận đặt hàng
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <!-- JAVASCRIPT: xử lý tìm kiếm, bộ lọc, nút mua và các tương tác động. -->
+<script>
+        // Chỉ chạy mã sau khi trình duyệt đã đọc xong toàn bộ HTML.
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Đọc dữ liệu sản phẩm mà trang danh sách đã lưu trong localStorage.
+            const productName =
+                localStorage.getItem("prod_name") || "Tên sản phẩm";
+
+            const productPrice =
+                localStorage.getItem("prod_price") || "0đ";
+
+            const productImage =
+                localStorage.getItem("prod_img") || "";
+
+            const productDescription =
+                localStorage.getItem("prod_desc") ||
+                "Chưa có mô tả cho sản phẩm này.";
+
+            /*
+             * Có thể lưu prod_category từ trang danh sách.
+             * Nếu chưa có, trang này sẽ tự đoán loại sản phẩm theo tên.
+             */
+            const savedCategory =
+                localStorage.getItem("prod_category") || "";
+
+            const titleElement =
+                document.getElementById("detail-title");
+
+            const priceElement =
+                document.getElementById("detail-price");
+
+            const imageElement =
+                document.getElementById("detail-img");
+
+            const descriptionElement =
+                document.getElementById("detail-desc");
+
+            const toggleNameElement =
+                document.getElementById("detail-toggle-name");
+
+            const tagElement =
+                document.getElementById("detail-tag");
+
+            const summaryElement =
+                document.getElementById("detail-summary");
+
+            const optionsContainer =
+                document.getElementById("optionsContainer");
+
+            const buyNowButton =
+                document.getElementById("buyNowButton");
+
+            const purchaseMessage =
+                document.getElementById("purchaseMessage");
+
+            const favoriteButton =
+                document.getElementById("favoriteButton");
+
+            const accordionButton =
+                document.getElementById("accordionButton");
+
+            const accordionContent =
+                document.getElementById("accordionContent");
+
+            const accordionIcon =
+                document.getElementById("accordionIcon");
+
+            const orderModal =
+                document.getElementById("orderModal");
+
+            const orderForm =
+                document.getElementById("orderForm");
+
+            const closeOrderModalButton =
+                document.getElementById("closeOrderModalButton");
+
+            const cancelOrderButton =
+                document.getElementById("cancelOrderButton");
+
+            const customerNameInput =
+                document.getElementById("customerName");
+
+            const customerPhoneInput =
+                document.getElementById("customerPhone");
+
+            const customerEmailInput =
+                document.getElementById("customerEmail");
+
+            const customerAddressInput =
+                document.getElementById("customerAddress");
+
+            const phoneError =
+                document.getElementById("phoneError");
+
+            const orderProductName =
+                document.getElementById("orderProductName");
+
+            const orderProductPrice =
+                document.getElementById("orderProductPrice");
+
+            const orderSelectedOptions =
+                document.getElementById("orderSelectedOptions");
+
+            // Chuẩn hóa chữ thường và bỏ dấu tiếng Việt để so sánh tên sản phẩm dễ hơn.
+
+            function normalizeText(value) {
+                return String(value)
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .toLowerCase();
+            }
+
+            // Xác định sản phẩm thuộc điện thoại, laptop hoặc loại phụ kiện nào.
+
+            function detectCategory(name, categoryFromStorage) {
+                const acceptedCategories = [
+                    "phone",
+                    "laptop",
+                    "phone-accessory",
+                    "computer-accessory"
+                ];
+
+                /*
+                 * Ưu tiên nhận diện theo tên sản phẩm trước.
+                 * Việc này tránh dùng nhầm prod_category cũ còn lưu trong
+                 * localStorage từ lần bấm Buy trước đó.
+                 */
+                const normalizedName = normalizeText(name);
+
+                if (
+                    normalizedName.includes("iphone") ||
+                    normalizedName.includes("samsung galaxy") ||
+                    normalizedName.includes("xiaomi")
+                ) {
+                    return "phone";
+                }
+
+                if (
+                    normalizedName.includes("macbook") ||
+                    normalizedName.includes("dell") ||
+                    normalizedName.includes("asus") ||
+                    normalizedName.includes("laptop")
+                ) {
+                    return "laptop";
+                }
+
+                if (
+                    normalizedName.includes("ram") ||
+                    normalizedName.includes("ssd") ||
+                    normalizedName.includes("webcam")
+                ) {
+                    return "computer-accessory";
+                }
+
+                if (
+                    normalizedName.includes("sac") ||
+                    normalizedName.includes("cap") ||
+                    normalizedName.includes("day") ||
+                    normalizedName.includes("tai nghe") ||
+                    normalizedName.includes("airpods") ||
+                    normalizedName.includes("dan") ||
+                    normalizedName.includes("kinh") ||
+                    normalizedName.includes("pin du phong") ||
+                    normalizedName.includes("usb-c") ||
+                    normalizedName.includes("hub")
+                ) {
+                    return "phone-accessory";
+                }
+
+                /* Chỉ dùng dữ liệu lưu nếu tên sản phẩm không đủ để nhận diện. */
+                if (
+                    acceptedCategories.includes(categoryFromStorage)
+                ) {
+                    return categoryFromStorage;
+                }
+
+                return "phone-accessory";
+            }
+
+            // Xác định loại chi tiết hơn của sản phẩm để chọn đúng cấu hình.
+
+            function detectSubtype(name, category) {
+                const normalizedName = normalizeText(name);
+
+                if (category === "phone") {
+                    return "phone";
+                }
+
+                if (category === "laptop") {
+                    return "laptop";
+                }
+
+                if (category === "computer-accessory") {
+                    if (normalizedName.includes("ram")) {
+                        return "ram";
+                    }
+
+                    if (normalizedName.includes("ssd")) {
+                        return "ssd";
+                    }
+
+                    if (normalizedName.includes("webcam")) {
+                        return "webcam";
+                    }
+
+                    return "computer-default";
+                }
+
+                if (
+                    normalizedName.includes("cu sac") ||
+                    normalizedName.includes("adapter")
+                ) {
+                    return "charger";
+                }
+
+                if (
+                    normalizedName.includes("day sac") ||
+                    normalizedName.includes("cap sac")
+                ) {
+                    return "cable";
+                }
+
+                if (
+                    normalizedName.includes("sac du phong") ||
+                    normalizedName.includes("pin du phong")
+                ) {
+                    return "power-bank";
+                }
+
+                if (
+                    normalizedName.includes("tai nghe") ||
+                    normalizedName.includes("airpods")
+                ) {
+                    return "headphone";
+                }
+
+                if (
+                    normalizedName.includes("dan") ||
+                    normalizedName.includes("kinh cuong luc")
+                ) {
+                    return "screen-protector";
+                }
+
+                if (
+                    normalizedName.includes("hub") ||
+                    normalizedName.includes("usb-c 5 in 1") ||
+                    normalizedName.includes("usb-c 5 in1")
+                ) {
+                    return "hub";
+                }
+
+                return "phone-accessory-default";
+            }
+
+            // Cấu hình lựa chọn cho từng loại sản phẩm: nhãn, danh sách giá trị và mô tả.
+            const optionConfigurations = {
+                phone: {
+                    tag: "Điện thoại",
+                    summary: "Chọn dung lượng và màu sắc phù hợp.",
+                    options: [
+                        {
+                            label: "Dung lượng",
+                            values: ["128GB", "256GB", "512GB", "1TB"]
+                        },
+                        {
+                            label: "Màu sắc",
+                            values: [
+                                "Đen",
+                                "Trắng",
+                                "Titan tự nhiên",
+                                "Cam"
+                            ]
+                        }
+                    ]
+                },
+
+                laptop: {
+                    tag: "Laptop",
+                    summary: "Chọn RAM và dung lượng SSD phù hợp.",
+                    options: [
+                        {
+                            label: "RAM",
+                            values: ["8GB", "16GB", "32GB"]
+                        },
+                        {
+                            label: "Ổ cứng SSD",
+                            values: ["256GB", "512GB", "1TB"]
+                        }
+                    ]
+                },
+
+                ram: {
+                    tag: "RAM máy tính",
+                    summary: "Chọn dung lượng và chuẩn RAM.",
+                    options: [
+                        {
+                            label: "Dung lượng",
+                            values: ["8GB", "16GB", "32GB"]
+                        },
+                        {
+                            label: "Chuẩn / Bus",
+                            values: [
+                                "DDR4 3200MHz",
+                                "DDR5 4800MHz",
+                                "DDR5 6000MHz"
+                            ]
+                        }
+                    ]
+                },
+
+                ssd: {
+                    tag: "Ổ cứng SSD",
+                    summary: "Chọn dung lượng và chuẩn kết nối SSD.",
+                    options: [
+                        {
+                            label: "Dung lượng",
+                            values: ["256GB", "512GB", "1TB", "2TB"]
+                        },
+                        {
+                            label: "Chuẩn kết nối",
+                            values: [
+                                "SATA III",
+                                "M.2 NVMe PCIe 3.0",
+                                "M.2 NVMe PCIe 4.0"
+                            ]
+                        }
+                    ]
+                },
+
+                webcam: {
+                    tag: "Webcam",
+                    summary: "Chọn độ phân giải và kiểu kết nối.",
+                    options: [
+                        {
+                            label: "Độ phân giải",
+                            values: ["Full HD 1080p", "2K", "4K"]
+                        },
+                        {
+                            label: "Kết nối",
+                            values: ["USB-A", "USB-C"]
+                        }
+                    ]
+                },
+
+                charger: {
+                    tag: "Củ sạc",
+                    summary: "Chọn công suất và loại cổng sạc.",
+                    options: [
+                        {
+                            label: "Công suất",
+                            values: ["20W", "30W", "40W", "65W"]
+                        },
+                        {
+                            label: "Cổng sạc",
+                            values: [
+                                "USB-C",
+                                "USB-A",
+                                "USB-C + USB-A"
+                            ]
+                        }
+                    ]
+                },
+
+                cable: {
+                    tag: "Dây sạc",
+                    summary: "Chọn chiều dài và chuẩn đầu cáp.",
+                    options: [
+                        {
+                            label: "Chiều dài",
+                            values: ["1m", "1.5m", "2m"]
+                        },
+                        {
+                            label: "Chuẩn cáp",
+                            values: [
+                                "USB-C to USB-C",
+                                "USB-C to Lightning",
+                                "USB-A to USB-C"
+                            ]
+                        }
+                    ]
+                },
+
+                "power-bank": {
+                    tag: "Sạc dự phòng",
+                    summary: "Chọn dung lượng pin và công suất sạc.",
+                    options: [
+                        {
+                            label: "Dung lượng",
+                            values: ["10.000mAh", "20.000mAh"]
+                        },
+                        {
+                            label: "Công suất",
+                            values: ["20W", "22.5W", "30W"]
+                        }
+                    ]
+                },
+
+                headphone: {
+                    tag: "Tai nghe",
+                    summary: "Chọn kiểu kết nối và màu sắc.",
+                    options: [
+                        {
+                            label: "Kết nối",
+                            values: ["Bluetooth", "USB-C", "3.5mm"]
+                        },
+                        {
+                            label: "Màu sắc",
+                            values: ["Trắng", "Đen", "Xanh"]
+                        }
+                    ]
+                },
+
+                "screen-protector": {
+                    tag: "Kính cường lực",
+                    summary: "Chọn dòng điện thoại và loại kính.",
+                    options: [
+                        {
+                            label: "Dòng máy",
+                            values: ["iPhone", "Samsung", "Xiaomi"]
+                        },
+                        {
+                            label: "Loại kính",
+                            values: [
+                                "Trong suốt",
+                                "Chống nhìn trộm",
+                                "Chống ánh sáng xanh"
+                            ]
+                        }
+                    ]
+                },
+
+                hub: {
+                    tag: "Hub chuyển đổi",
+                    summary: "Chọn chuẩn kết nối và số lượng cổng.",
+                    options: [
+                        {
+                            label: "Chuẩn kết nối",
+                            values: ["USB-C", "Thunderbolt"]
+                        },
+                        {
+                            label: "Số cổng",
+                            values: ["5 in 1", "7 in 1", "9 in 1"]
+                        }
+                    ]
+                },
+
+                "computer-default": {
+                    tag: "Phụ kiện máy tính",
+                    summary: "Chọn phiên bản và chuẩn kết nối.",
+                    options: [
+                        {
+                            label: "Phiên bản",
+                            values: ["Tiêu chuẩn", "Nâng cao"]
+                        },
+                        {
+                            label: "Kết nối",
+                            values: ["USB-A", "USB-C", "Không dây"]
+                        }
+                    ]
+                },
+
+                "phone-accessory-default": {
+                    tag: "Phụ kiện điện thoại",
+                    summary: "Chọn phiên bản và màu sắc.",
+                    options: [
+                        {
+                            label: "Phiên bản",
+                            values: ["Tiêu chuẩn", "Cao cấp"]
+                        },
+                        {
+                            label: "Màu sắc",
+                            values: ["Đen", "Trắng", "Xanh"]
+                        }
+                    ]
+                }
+            };
+
+            // Tạo một nhóm lựa chọn cấu hình gồm label và thẻ select.
+
+            function createOptionGroup(option, index) {
+                const group = document.createElement("div");
+                group.className = "option-group";
+
+                const label = document.createElement("label");
+                label.setAttribute("for", "product-option-" + index);
+                label.textContent = option.label;
+
+                const select = document.createElement("select");
+                select.className = "custom-select";
+                select.id = "product-option-" + index;
+                select.dataset.optionLabel = option.label;
+
+                option.values.forEach(function (value) {
+                    const optionElement =
+                        document.createElement("option");
+
+                    optionElement.value = value;
+                    optionElement.textContent = value;
+                    select.appendChild(optionElement);
+                });
+
+                group.appendChild(label);
+                group.appendChild(select);
+
+                return group;
+            }
+
+            // Duyệt cấu hình sản phẩm và đưa các ô lựa chọn lên trang.
+
+            function renderProductOptions(configuration) {
+                optionsContainer.innerHTML = "";
+
+                configuration.options.forEach(
+                    function (option, index) {
+                        optionsContainer.appendChild(
+                            createOptionGroup(option, index)
+                        );
+                    }
+                );
+            }
+
+            // Tô sáng mục menu tương ứng với loại sản phẩm đang xem.
+
+            function highlightCurrentMenu(category) {
+                document
+                    .querySelectorAll("[data-menu-category]")
+                    .forEach(function (link) {
+                        link.classList.toggle(
+                            "active",
+                            link.dataset.menuCategory === category
+                        );
+                    });
+            }
+
+            const category =
+                detectCategory(productName, savedCategory);
+
+            const subtype =
+                detectSubtype(productName, category);
+
+            const configuration =
+                optionConfigurations[subtype] ||
+                optionConfigurations["phone-accessory-default"];
+
+            titleElement.textContent = productName;
+            toggleNameElement.textContent =
+                "Thông số: " + productName;
+
+            priceElement.textContent = productPrice;
+            descriptionElement.textContent = productDescription;
+
+            tagElement.textContent = configuration.tag;
+            summaryElement.textContent = configuration.summary;
+
+            renderProductOptions(configuration);
+            highlightCurrentMenu(category);
+
+            imageElement.src =
+                productImage || "img/placeholder-product.svg";
+
+            imageElement.alt = productName;
+
+            imageElement.addEventListener("error", function () {
+                this.onerror = null;
+                this.src = "img/placeholder-product.svg";
+            });
+
+            // Thu thập các cấu hình mà người dùng đã chọn trong các thẻ select.
+
+            function getSelectedOptions() {
+                const selectedOptions = {};
+
+                document
+                    .querySelectorAll(
+                        "#optionsContainer .custom-select"
+                    )
+                    .forEach(function (select) {
+                        selectedOptions[
+                            select.dataset.optionLabel
+                        ] = select.value;
+                    });
+
+                return selectedOptions;
+            }
+
+            // Ghép các cấu hình đã chọn thành một dòng văn bản dễ đọc.
+
+            function createOptionText(selectedOptions) {
+                return Object.entries(selectedOptions)
+                    .map(function (entry) {
+                        return entry[0] + ": " + entry[1];
+                    })
+                    .join(" · ");
+            }
+
+            // Đọc thông tin khách hàng đã lưu trước đó từ localStorage và điền vào form.
+
+            function loadSavedCustomerInformation() {
+                try {
+                    const savedCustomer = JSON.parse(
+                        localStorage.getItem("customer_info") || "{}"
+                    );
+
+                    customerNameInput.value =
+                        savedCustomer.name || "";
+
+                    customerPhoneInput.value =
+                        savedCustomer.phone || "";
+
+                    customerEmailInput.value =
+                        savedCustomer.email || "";
+
+                    customerAddressInput.value =
+                        savedCustomer.address || "";
+                } catch (error) {
+                    localStorage.removeItem("customer_info");
+                }
+            }
+
+            // Mở hộp thoại đặt hàng và đưa thông tin sản phẩm/cấu hình vào hộp thoại.
+
+            function openOrderModal() {
+                const selectedOptions = getSelectedOptions();
+                const optionText = createOptionText(selectedOptions);
+
+                localStorage.setItem(
+                    "prod_selected_options",
+                    JSON.stringify(selectedOptions)
+                );
+
+                localStorage.setItem(
+                    "prod_category",
+                    category
+                );
+
+                orderProductName.textContent = productName;
+                orderProductPrice.textContent = productPrice;
+
+                orderSelectedOptions.textContent =
+                    optionText
+                        ? "Lựa chọn: " + optionText
+                        : "Sản phẩm không có lựa chọn bổ sung.";
+
+                loadSavedCustomerInformation();
+
+                phoneError.textContent = "";
+                customerPhoneInput.classList.remove("input-error");
+
+                orderModal.hidden = false;
+                orderModal.setAttribute("aria-hidden", "false");
+                document.body.classList.add("modal-open");
+
+                window.setTimeout(function () {
+                    customerNameInput.focus();
+                }, 50);
+            }
+
+            // Đóng hộp thoại đặt hàng và trả focus về nút mua.
+
+            function closeOrderModal() {
+                orderModal.hidden = true;
+                orderModal.setAttribute("aria-hidden", "true");
+                document.body.classList.remove("modal-open");
+
+                buyNowButton.focus();
+            }
+
+            // Kiểm tra số điện thoại Việt Nam có đúng định dạng cơ bản hay không.
+
+            function isValidVietnamesePhone(phone) {
+                const normalizedPhone = phone.replace(
+                    /[\s.\-()]/g,
+                    ""
+                );
+
+                return /^(0\d{9}|\+84\d{9})$/.test(
+                    normalizedPhone
+                );
+            }
+
+            buyNowButton.addEventListener("click", openOrderModal);
+
+            closeOrderModalButton.addEventListener(
+                "click",
+                closeOrderModal
+            );
+
+            cancelOrderButton.addEventListener(
+                "click",
+                closeOrderModal
+            );
+
+            orderModal
+                .querySelector("[data-close-order-modal]")
+                .addEventListener("click", closeOrderModal);
+
+            document.addEventListener("keydown", function (event) {
+                if (
+                    event.key === "Escape" &&
+                    !orderModal.hidden
+                ) {
+                    closeOrderModal();
+                }
+            });
+
+            customerPhoneInput.addEventListener(
+                "input",
+                function () {
+                    phoneError.textContent = "";
+                    this.classList.remove("input-error");
+                }
+            );
+
+            // Khi gửi đơn hàng: chặn tải lại trang, kiểm tra dữ liệu rồi lưu đơn vào localStorage.
+            orderForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                if (!orderForm.checkValidity()) {
+                    orderForm.reportValidity();
+                    return;
+                }
+
+                const phone = customerPhoneInput.value.trim();
+
+                if (!isValidVietnamesePhone(phone)) {
+                    phoneError.textContent =
+                        "Số điện thoại phải có dạng 0912345678 hoặc +84912345678.";
+
+                    customerPhoneInput.classList.add("input-error");
+                    customerPhoneInput.focus();
+                    return;
+                }
+
+                const selectedOptions = getSelectedOptions();
+
+                const customer = {
+                    name: customerNameInput.value.trim(),
+                    phone: phone,
+                    email: customerEmailInput.value.trim(),
+                    address: customerAddressInput.value.trim()
+                };
+
+                const order = {
+                    orderId: "DH" + Date.now(),
+                    createdAt: new Date().toLocaleString("vi-VN"),
+                    product: {
+                        name: productName,
+                        price: productPrice,
+                        image: productImage,
+                        category: category,
+                        options: selectedOptions
+                    },
+                    customer: customer
+                };
+
+                localStorage.setItem(
+                    "customer_info",
+                    JSON.stringify(customer)
+                );
+
+                localStorage.setItem(
+                    "last_order",
+                    JSON.stringify(order)
+                );
+
+                let orderHistory = [];
+
+                try {
+                    orderHistory = JSON.parse(
+                        localStorage.getItem("order_history") || "[]"
+                    );
+
+                    if (!Array.isArray(orderHistory)) {
+                        orderHistory = [];
+                    }
+                } catch (error) {
+                    orderHistory = [];
+                }
+
+                orderHistory.push(order);
+
+                localStorage.setItem(
+                    "order_history",
+                    JSON.stringify(orderHistory)
+                );
+
+                closeOrderModal();
+
+                purchaseMessage.textContent =
+                    "Đặt hàng thành công! Mã đơn: " +
+                    order.orderId +
+                    ". Cửa hàng sẽ liên hệ với bạn để xác nhận.";
+
+                purchaseMessage.classList.add("purchase-success");
+                purchaseMessage.style.display = "block";
+
+                purchaseMessage.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            });
+
+            favoriteButton.addEventListener("click", function () {
+                const icon = this.querySelector("i");
+                const isFavorite =
+                    icon.classList.contains("fa-solid");
+
+                icon.classList.toggle("fa-solid", !isFavorite);
+                icon.classList.toggle("fa-regular", isFavorite);
+
+                this.setAttribute(
+                    "aria-label",
+                    isFavorite
+                        ? "Thêm vào yêu thích"
+                        : "Bỏ khỏi yêu thích"
+                );
+            });
+
+            accordionButton.addEventListener("click", function () {
+                const isOpen =
+                    this.getAttribute("aria-expanded") === "true";
+
+                this.setAttribute(
+                    "aria-expanded",
+                    String(!isOpen)
+                );
+
+                accordionContent.style.display =
+                    isOpen ? "none" : "block";
+
+                accordionIcon.classList.toggle(
+                    "fa-chevron-up",
+                    !isOpen
+                );
+
+                accordionIcon.classList.toggle(
+                    "fa-chevron-down",
+                    isOpen
+                );
+            });
+        });
+    </script>
+</body>
+</html>

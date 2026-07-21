@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!--
+    ================================================================
+    FILE: gioithieu.html
+    MỤC ĐÍCH: Trang giới thiệu nhóm và mô tả mục tiêu của website.
+
+    CÁCH ĐỌC NHANH:
+    - Thẻ HTML như <header>, <main>, <section> tạo cấu trúc nội dung.
+    - class="..." dùng để CSS định dạng nhiều phần tử cùng kiểu.
+    - id="..." là tên duy nhất để JavaScript tìm và điều khiển phần tử.
+    - data-* là dữ liệu riêng gắn vào HTML để JavaScript đọc bằng element.dataset.
+    - Các dòng ghi chú HTML chỉ để giải thích, không hiển thị trên trang web.
+    ================================================================
+-->
+
+<html lang="vi">
+<head>
+<!-- Phần <head> khai báo mã hóa, cách hiển thị trên điện thoại, tiêu đề và các file CSS. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Giới Thiệu</title>
+
+    <!-- CSS dùng chung cho toàn bộ website -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- CSS riêng của trang giới thiệu -->
+    <link rel="stylesheet" href="css/gioithieu.css">
+    <!-- icons.css căn kích thước/vị trí icon trên menu và nút Buy. -->
+    <link rel="stylesheet" href="css/icons.css">
+</head>
+<body>
+<!-- Phần <body> chứa toàn bộ nội dung nhìn thấy và tương tác được trên trang. -->
+
+    <!-- HEADER/NAVBAR: thanh điều hướng dùng chung ở phía trên website. -->
+<header class="navbar">
+        <div class="logo">
+            <div class="logo-box">💻</div>
+        </div>
+        <!--
+    MENU CHÍNH:
+    - href: đường dẫn mở trang khác.
+    - class="active": tô nền mục của trang hiện tại.
+    - <img class="menu-icon">: ảnh biểu tượng; kích thước được quy định trong css/icons.css.
+    - alt="" và aria-hidden="true": icon chỉ để trang trí, trình đọc màn hình sẽ bỏ qua.
+-->
+<nav class="menu-chinh">
+           <a href="index.html"><img class="menu-icon" src="icon/trang chủ.png" alt="" aria-hidden="true">Trang chủ</a>
+            <a href="gioithieu.html" class="active"><img class="menu-icon" src="icon/giới thiệu.png" alt="" aria-hidden="true">Giới thiệu</a>
+            <a href="phukien.html"><img class="menu-icon" src="icon/phụ kiện điện thoại.png" alt="" aria-hidden="true">Phụ kiện Điện Thoại</a>
+            <a href="dienthoai.html"><img class="menu-icon" src="icon/iphone.png" alt="" aria-hidden="true">Điện thoại</a>
+            <a href="laptop.html"><img class="menu-icon" src="icon/laptop.png" alt="" aria-hidden="true">LapTop</a>
+            <a href="phukienmaytinh.html"><img class="menu-icon" src="icon/computer.png" alt="" aria-hidden="true">Phụ kiện Máy tính</a>
+            <a href="Dangnhap.html" class="btn-orange">Đăng nhập</a>
+            <a href="DangKy.html" class="btn-blue">Đăng ký</a>
+        </nav>
+    </header>
+
+    <!-- MAIN: nội dung chính và riêng biệt của trang. -->
+
+    <main class="about-page">
+
+        <section class="about-hero">
+            <div class="about-overlay"></div>
+
+            <div class="about-content">
+                <p class="about-label">THÔNG TIN NHÓM</p>
+
+                <h1>Giới Thiệu</h1>
+
+                <p class="about-subtitle">
+                    Bài tập thực hành nhóm xây dựng website cửa hàng công nghệ.
+                </p>
+
+                <div class="member-list">
+                    <article class="member-card">
+                        <span class="member-number">01</span>
+                        <div>
+                            <h2>Kha An Khang</h2>
+                            <p>MSSV: 2474802017141</p>
+                        </div>
+                    </article>
+
+                    <article class="member-card">
+                        <span class="member-number">02</span>
+                        <div>
+                            <h2>Trần Nhật Anh</h2>
+                            <p>MSSV: 2474802016928</p>
+                        </div>
+                    </article>
+
+                    <article class="member-card">
+                        <span class="member-number">03</span>
+                        <div>
+                            <h2>Nguyễn Hồng Phú</h2>
+                            <p>MSSV: 2474802010309</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-description">
+            <div class="about-description-card">
+                <h2>Về website</h2>
+
+                <p>
+                    Website được xây dựng nhằm giới thiệu và trưng bày các sản phẩm
+                    công nghệ như điện thoại, laptop, phụ kiện điện thoại và phụ
+                    kiện máy tính.
+                </p>
+            </div>
+
+            <div class="about-description-card">
+                <h2>Mục tiêu</h2>
+
+                <p>
+                    Giao diện được thiết kế đồng nhất, dễ sử dụng, hỗ trợ tìm kiếm,
+                    lọc sản phẩm và xem thông tin chi tiết trước khi mua hàng.
+                </p>
+            </div>
+
+            <div class="about-description-card">
+                <h2>Công nghệ sử dụng</h2>
+
+                <p>
+                    HTML, CSS và JavaScript được sử dụng để xây dựng giao diện,
+                    xử lý bộ lọc, phân trang và truyền dữ liệu sản phẩm.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

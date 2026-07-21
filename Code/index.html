@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<!--
+    ================================================================
+    FILE: index.html
+    MỤC ĐÍCH: Trang chủ: hiển thị 4 nhóm sản phẩm, tìm kiếm và chuyển trang bằng JavaScript.
+
+    CÁCH ĐỌC NHANH:
+    - Thẻ HTML như <header>, <main>, <section> tạo cấu trúc nội dung.
+    - class="..." dùng để CSS định dạng nhiều phần tử cùng kiểu.
+    - id="..." là tên duy nhất để JavaScript tìm và điều khiển phần tử.
+    - data-* là dữ liệu riêng gắn vào HTML để JavaScript đọc bằng element.dataset.
+    - Các dòng ghi chú HTML chỉ để giải thích, không hiển thị trên trang web.
+    ================================================================
+-->
+
+<html lang="vi">
+<head>
+<!-- Phần <head> khai báo mã hóa, cách hiển thị trên điện thoại, tiêu đề và các file CSS. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Danh Sách Sản Phẩm</title>
+
+    <!-- CSS chung: màu sắc, font, header, nút và product-card -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- CSS riêng: chỉ bố trí giao diện trang sản phẩm này -->
+    <link rel="stylesheet" href="css/trangchu.css">
+    <!-- icons.css căn kích thước/vị trí icon trên menu và nút Buy. -->
+    <link rel="stylesheet" href="css/icons.css">
+</head>
+<body>
+<!-- Phần <body> chứa toàn bộ nội dung nhìn thấy và tương tác được trên trang. -->
+
+    <!-- HEADER/NAVBAR: thanh điều hướng dùng chung ở phía trên website. -->
+<header class="navbar">
+        <div class="logo">
+            <div class="logo-box">💻</div>
+        </div>
+        <!--
+    MENU CHÍNH:
+    - href: đường dẫn mở trang khác.
+    - class="active": tô nền mục của trang hiện tại.
+    - <img class="menu-icon">: ảnh biểu tượng; kích thước được quy định trong css/icons.css.
+    - alt="" và aria-hidden="true": icon chỉ để trang trí, trình đọc màn hình sẽ bỏ qua.
+-->
+<nav class="menu-chinh">
+            <a href="index.html" class="active"><img class="menu-icon" src="icon/trang chủ.png" alt="" aria-hidden="true">Trang chủ</a>
+            <a href="gioithieu.html"><img class="menu-icon" src="icon/giới thiệu.png" alt="" aria-hidden="true">Giới thiệu</a>
+            <a href="phukien.html"><img class="menu-icon" src="icon/phụ kiện điện thoại.png" alt="" aria-hidden="true">Phụ kiện Điện Thoại</a>
+            <a href="dienthoai.html"><img class="menu-icon" src="icon/iphone.png" alt="" aria-hidden="true">Điện thoại</a>
+            <a href="laptop.html"><img class="menu-icon" src="icon/laptop.png" alt="" aria-hidden="true">LapTop</a>
+            <a href="phukienmaytinh.html"><img class="menu-icon" src="icon/computer.png" alt="" aria-hidden="true">Phụ kiện Máy tính</a>
+            <a href="Dangnhap.html" class="btn-orange">Đăng nhập</a>
+            <a href="DangKy.html" class="btn-blue">Đăng ký</a>
+        </nav>
+    </header>
+
+    <!-- MAIN: nội dung chính và riêng biệt của trang. -->
+
+    <main class="catalog-page">
+
+        <section class="catalog-heading">
+            <div class="catalog-heading-text">
+                <p class="catalog-label">DANH MỤC SẢN PHẨM</p>
+
+                <h1 id="catalogTitle">Mẫu Điện Thoại Mới Nhất!</h1>
+
+                <p id="catalogDescription">
+                    Những mẫu điện thoại nổi bật đang có trong cửa hàng.
+                </p>
+            </div>
+
+            <div class="catalog-search">
+                <span aria-hidden="true">⌕</span>
+
+                <input
+                    id="searchInput"
+                    type="search"
+                    placeholder="Tìm trong danh mục hiện tại"
+                    autocomplete="off"
+                >
+            </div>
+        </section>
+
+        <section class="catalog-panel">
+
+            <div class="catalog-toolbar">
+                <div>
+                    <h2 id="categoryName">Điện thoại</h2>
+                    <p id="resultCount" aria-live="polite"></p>
+                </div>
+
+                <div class="catalog-page-indicator">
+                    Trang <strong id="currentPageText">1</strong>
+                    / <span id="totalPageText">4</span>
+                </div>
+            </div>
+
+            <div class="products-grid catalog-grid" id="productGrid"></div>
+
+            <div class="empty-result" id="emptyResult">
+                Không tìm thấy sản phẩm phù hợp.
+            </div>
+
+            <nav class="pagination" aria-label="Chuyển nhóm sản phẩm">
+                <button
+                    class="q-filter page-control"
+                    id="previousButton"
+                    type="button"
+                    aria-label="Trang trước"
+                >
+                    ‹
+                </button>
+
+                <div class="page-number-list" id="pageNumberList"></div>
+
+                <button
+                    class="q-filter page-control"
+                    id="nextButton"
+                    type="button"
+                    aria-label="Trang sau"
+                >
+                    ›
+                </button>
+            </nav>
+
+            <p class="pagination-help">
+                Trang 1: Điện thoại · Trang 2: Laptop ·
+                Trang 3: Phụ kiện điện thoại · Trang 4: Phụ kiện máy tính
+            </p>
+        </section>
+    </main>
+
+    <!-- JAVASCRIPT: xử lý tìm kiếm, bộ lọc, nút mua và các tương tác động. -->
+<script>
+        // Chỉ chạy mã sau khi trình duyệt đã đọc xong toàn bộ HTML.
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Dữ liệu sản phẩm được đặt trong mảng; mỗi phần tử là một danh mục/trang.
+            const catalogPages = [
+                {
+                    name: "Điện thoại",
+                    category: "phone", // Mã danh mục dùng để tô đúng menu ở trang chi tiết.
+                    title: "Mẫu Điện Thoại Mới Nhất!",
+                    description:
+                        "Những mẫu điện thoại nổi bật đang có trong cửa hàng.",
+                    products: [
+                        {
+                            name: "iPhone 17 Pro Max",
+                            price: "31.690.000đ",
+                            image: "img/cam-pro-17.webp",
+                            description:
+                                "Màn hình ProMotion 120Hz, hiệu năng mạnh và hệ thống camera cao cấp."
+                        },
+                        {
+                            name: "iPhone 16 Pro Max",
+                            price: "32.600.000đ",
+                            image: "img/den-16-pro.webp",
+                            description:
+                                "Chip Apple A18 Pro, camera Fusion 48MP và thiết kế titan."
+                        },
+                        {
+                            name: "Samsung Galaxy S24 Ultra",
+                            price: "18.990.000đ",
+                            image: "img/den-S24.webp",
+                            description:
+                                "Galaxy AI, camera 200MP, Snapdragon 8 Gen 3 và bút S Pen."
+                        },
+                        {
+                            name: "Samsung Galaxy S25 Ultra",
+                            price: "31.062.500đ",
+                            image: "img/den-S25.webp",
+                            description:
+                                "Xử lý AI thế hệ mới, camera Space Zoom và màn hình AMOLED."
+                        },
+                        {
+                            name: "Xiaomi 14T",
+                            price: "13.740.000đ",
+                            image: "img/den-14T.webp",
+                            description:
+                                "Camera Leica, hiệu năng ổn định và màn hình tần số quét cao."
+                        },
+                        {
+                            name: "Xiaomi 15T",
+                            price: "11.979.000đ",
+                            image: "img/den-15T.webp",
+                            description:
+                                "Camera Leica nâng cấp, sạc nhanh và thiết kế kính mờ."
+                        }
+                    ]
+                },
+                {
+                    name: "Laptop",
+                    category: "laptop", // Mã danh mục dùng để tô đúng menu ở trang chi tiết.
+                    title: "Mẫu Laptop Mới Nhất!",
+                    description:
+                        "Laptop dành cho học tập, văn phòng, gaming và đồ họa.",
+                    products: [
+                        {
+                            name: "MacBook Air 13 M2",
+                            price: "19.990.000đ",
+                            image: "img/bac-M2.webp",
+                            description:
+                                "Thiết kế mỏng nhẹ, chip Apple M2 và màn hình Liquid Retina."
+                        },
+                        {
+                            name: "MacBook Air M3 13",
+                            price: "32.990.000đ",
+                            image: "img/bac-M3.webp",
+                            description:
+                                "Chip Apple M3, hỗ trợ Ray Tracing và kết nối Wi-Fi 6E."
+                        },
+                        {
+                            name: "Dell 15 DC15250",
+                            price: "20.990.000đ",
+                            image: "img/dell-bac-15.webp",
+                            description:
+                                "Thiết kế thanh lịch, cấu hình ổn định và sạc nhanh ExpressCharge."
+                        },
+                        {
+                            name: "Dell Inspiron 15 3520",
+                            price: "6.990.000đ",
+                            image: "img/dell-den15.webp",
+                            description:
+                                "Phù hợp học tập, làm việc văn phòng và giải trí cơ bản."
+                        },
+                        {
+                            name: "Asus TUF Gaming",
+                            price: "21.990.000đ",
+                            image: "img/den-TUF.webp",
+                            description:
+                                "Laptop gaming bền bỉ, card RTX và màn hình tần số quét cao."
+                        },
+                        {
+                            name: "Asus Gaming V16",
+                            price: "34.490.001đ",
+                            image: "img/den-Gv16.webp",
+                            description:
+                                "Hiệu năng cao, màn hình 16 inch và card đồ họa rời."
+                        }
+                    ]
+                },
+                {
+                    name: "Phụ kiện điện thoại",
+                    category: "phone-accessory", // Mã danh mục dùng để tô đúng menu ở trang chi tiết.
+                    title: "Phụ Kiện Điện Thoại Mới Nhất!",
+                    description:
+                        "Củ sạc, dây sạc, pin dự phòng, tai nghe và phụ kiện bảo vệ.",
+                    products: [
+                        {
+                            name: "Dây sạc USB-C 60W",
+                            price: "219.000đ",
+                            image:
+                                "img/Cáp sạc nhanh từ tính tự cuộn 9Fit USB-C to USB-C 60W, 1m, Xanh lá (9C10MCCG).webp",
+                            description:
+                                "Cáp sạc nhanh tự cuộn, chống rối và hỗ trợ công suất 60W."
+                        },
+                        {
+                            name: "Củ sạc Mophie 40W",
+                            price: "440.000đ",
+                            image:
+                                "img/Củ sạc Mophie Essentials 40W 1C GaN White - 409917454.webp",
+                            description:
+                                "Củ sạc GaN nhỏ gọn, hỗ trợ sạc nhanh PD 40W."
+                        },
+                        {
+                            name: "Dán cường lực",
+                            price: "390.000đ",
+                            image: "img/Dán kinh ip.webp",
+                            description:
+                                "Kính cường lực 9H, hạn chế trầy xước và bám dấu vân tay."
+                        },
+                        {
+                            name: "Sạc dự phòng Baseus",
+                            price: "850.000đ",
+                            image:
+                                "img/Pin sạc dự phòng Baseus EnerFill FC51 Bipow2 Pro Built-in Cable Digital Display 10000mAh 22.5W.webp",
+                            description:
+                                "Dung lượng 10000mAh, tích hợp dây sạc và màn hình hiển thị."
+                        },
+                        {
+                            name: "USB-C 5 in 1",
+                            price: "600.000đ",
+                            image: "img/USB-C 5 in1.webp",
+                            description:
+                                "Hub USB-C đa năng, hỗ trợ truyền dữ liệu và xuất hình ảnh."
+                        },
+                        {
+                            name: "Tai nghe AirPods 4",
+                            price: "3.490.000đ",
+                            image:
+                                "img/Tai nghe Bluetooth Apple AirPods 4.webp",
+                            description:
+                                "Kết nối Bluetooth nhanh, thiết kế gọn và thời lượng pin dài."
+                        }
+                    ]
+                },
+                {
+                    name: "Phụ kiện máy tính",
+                    category: "computer-accessory", // Mã danh mục dùng để tô đúng menu ở trang chi tiết.
+                    title: "Phụ Kiện Máy Tính Mới Nhất!",
+                    description:
+                        "RAM, SSD, webcam và linh kiện nâng cấp máy tính.",
+                    products: [
+                        {
+                            name: "RAM Kingston Fury Beast DDR4",
+                            price: "3.150.000đ",
+                            image: "img/RAN PC_fury.png",
+                            description:
+                                "RAM Kingston Fury Beast DDR4 có thiết kế tản nhiệt màu đen, hỗ trợ vận hành ổn định và phù hợp cho máy tính chơi game, học tập hoặc làm việc đa nhiệm."
+                        },
+                        {
+                            name: "RAM ADATA XPG Spectrix D50 RGB",
+                            price: "2.690.000đ",
+                            image: "img/Ram_adata_xpg.png",
+                            description:
+                                "RAM ADATA XPG Spectrix D50 RGB sử dụng tản nhiệt kim loại chắc chắn, tích hợp đèn RGB và phù hợp với các bộ máy tính cần hiệu năng cao cùng ngoại hình nổi bật."
+                        },
+                        {
+                            name: "Webcam Logitech C310",
+                            price: "550.000đ",
+                            image: "img/WebCam.png",
+                            description:
+                                "Webcam Logitech C310 phù hợp cho học trực tuyến, họp từ xa và gọi video. Thiết kế nhỏ gọn, dễ lắp trên màn hình và sử dụng thuận tiện qua kết nối USB."
+                        },
+                        {
+                            name: "RAM Corsair Vengeance LPX DDR4",
+                            price: "750.000đ",
+                            image: "img/Ram_corsair_DDR4.png",
+                            description:
+                                "RAM Corsair Vengeance LPX DDR4 có thiết kế tản nhiệt thấp, tương thích với nhiều cấu hình máy tính và phù hợp cho học tập, làm việc hoặc chơi game."
+                        },
+                        {
+                            name: "RAM Corsair DDR5",
+                            price: "27.990.000đ",
+                            image: "img/Ram_Corsair.png",
+                            description:
+                                "RAM Corsair DDR5 cung cấp băng thông cao hơn thế hệ DDR4, phù hợp cho hệ thống hiệu năng cao, xử lý đa nhiệm, đồ họa và các tác vụ nặng."
+                        },
+                        {
+                            name: "RAM Laptop ADATA XPG 16GB DDR5 6000MHz",
+                            price: "7.690.000đ",
+                            image: "img/Ram_pc_DDR5.png",
+                            description:
+                                "RAM laptop ADATA XPG dung lượng 16GB, chuẩn DDR5 và tốc độ 6000MHz phù hợp cho laptop hiệu năng cao, chơi game, lập trình và xử lý nội dung."
+                        },
+                        {
+                            name: "SSD Kingston NV3 500GB NVMe",
+                            price: "3.890.000đ",
+                            image: "img/SSD_kingston NV3.png",
+                            description:
+                                "SSD Kingston NV3 dung lượng 500GB sử dụng chuẩn M.2 NVMe, giúp rút ngắn thời gian khởi động hệ điều hành, mở ứng dụng và sao chép dữ liệu."
+                        },
+                        {
+                            name: "SSD Samsung 990 PRO 1TB NVMe",
+                            price: "3.200.000đ",
+                            image: "img/SSD_samsum.png",
+                            description:
+                                "SSD Samsung 990 PRO dung lượng 1TB sử dụng chuẩn M.2 NVMe, phù hợp cho chơi game, đồ họa, xử lý dữ liệu và các hệ thống cần tốc độ truy xuất cao."
+                        },
+                        {
+                            name: "SSD SanDisk Extreme Portable 1TB",
+                            price: "5.350.000đ",
+                            image: "img/SSD_sandisk.png",
+                            description:
+                                "SSD SanDisk Extreme Portable dung lượng 1TB là ổ lưu trữ di động nhỏ gọn, phù hợp sao lưu dữ liệu, mang theo tài liệu và sử dụng với nhiều thiết bị."
+                        },
+                        {
+                            name: "SSD VSP 256GB SATA",
+                            price: "1.690.000đ",
+                            image: "img/SSD_VSP.png",
+                            description:
+                                "SSD VSP dung lượng 256GB sử dụng chuẩn SATA, phù hợp nâng cấp máy tính văn phòng hoặc laptop phổ thông để cải thiện tốc độ khởi động và mở ứng dụng."
+                        },
+                        {
+                            name: "SSD Western Digital Blue SN5000 1TB",
+                            price: "3.190.000đ",
+                            image: "img/SSD_WB_BLUE.png",
+                            description:
+                                "SSD Western Digital Blue SN5000 dung lượng 1TB sử dụng chuẩn M.2 NVMe, phù hợp cho học tập, làm việc, sáng tạo nội dung và lưu trữ dữ liệu dung lượng lớn."
+                        },
+                        {
+                            name: "SSD Kioxia Exceria NVMe 1TB",
+                            price: "5.990.000đ",
+                            image: "img/O_cung_ssd.png",
+                            description:
+                                "SSD Kioxia Exceria dung lượng 1TB sử dụng chuẩn M.2 NVMe, giúp tăng tốc khởi động hệ điều hành, mở ứng dụng và xử lý dữ liệu hằng ngày."
+                        },
+                        {
+                            name: "SSD Kioxia NVMe",
+                            price: "990.000đ",
+                            image: "img/O_cung_ssd.png",
+                            description:
+                                "SSD Kioxia Exceria dung lượng 1TB sử dụng chuẩn M.2 NVMe, giúp tăng tốc khởi động hệ điều hành, mở ứng dụng và xử lý dữ liệu hằng ngày."
+                        }
+                    ]
+                }
+            ];
+
+            // Tham chiếu tới các phần tử có id trong HTML để JavaScript thay đổi nội dung.
+            const catalogTitle =
+                document.getElementById("catalogTitle");
+            const catalogDescription =
+                document.getElementById("catalogDescription");
+            const categoryName =
+                document.getElementById("categoryName");
+            const resultCount =
+                document.getElementById("resultCount");
+            const currentPageText =
+                document.getElementById("currentPageText");
+            const totalPageText =
+                document.getElementById("totalPageText");
+            const productGrid =
+                document.getElementById("productGrid");
+            const emptyResult =
+                document.getElementById("emptyResult");
+            const pageNumberList =
+                document.getElementById("pageNumberList");
+            const previousButton =
+                document.getElementById("previousButton");
+            const nextButton =
+                document.getElementById("nextButton");
+            const searchInput =
+                document.getElementById("searchInput");
+
+            // Biến trạng thái: ghi nhớ danh mục/trang người dùng đang xem.
+            let currentPage = 1;
+
+            totalPageText.textContent = catalogPages.length;
+
+            // Chuyển các ký tự đặc biệt thành dạng an toàn trước khi ghép dữ liệu vào HTML.
+
+            function escapeHtml(value) {
+                return String(value)
+                    .replaceAll("&", "&amp;")
+                    .replaceAll("<", "&lt;")
+                    .replaceAll(">", "&gt;")
+                    .replaceAll('"', "&quot;")
+                    .replaceAll("'", "&#039;");
+            }
+
+            // Nhận một sản phẩm và tạo chuỗi HTML cho một thẻ sản phẩm.
+
+            function createProductCard(product, category) {
+                const name = escapeHtml(product.name);
+                const price = escapeHtml(product.price);
+                const image = escapeHtml(product.image);
+                const description = escapeHtml(product.description);
+                const productCategory = escapeHtml(category);
+
+                /*
+                 * category được đưa vào data-category của nút Buy.
+                 * Nhờ vậy, khi sang trang chi tiết, JavaScript biết sản phẩm
+                 * thuộc Điện thoại, Laptop hay nhóm phụ kiện nào.
+                 */
+
+                return `
+                    <article class="product-card catalog-card">
+                        <div class="product-img catalog-product-image">
+                            <img
+                                src="${image}"
+                                alt="${name}"
+                                loading="lazy"
+                            >
+                        </div>
+
+                        <h3 class="product-title">${name}</h3>
+                        <p class="product-price">${price}</p>
+
+                        <button
+                            class="btn-buy"
+                            type="button"
+                            data-name="${name}"
+                            data-price="${price}"
+                            data-img="${image}"
+                            data-description="${description}"
+                            data-category="${productCategory}"
+                        >
+                            <img class="buy-icon" src="icon/Buy.png" alt="" aria-hidden="true">
+                            <span>Buy</span>
+                        </button>
+                    </article>
+                `;
+            }
+
+            // Tạo các nút số trang và đánh dấu trang đang được chọn.
+
+            function renderPageNumbers() {
+                pageNumberList.innerHTML = "";
+
+                catalogPages.forEach(function (page, index) {
+                    const pageNumber = index + 1;
+                    const button = document.createElement("button");
+
+                    button.type = "button";
+                    button.className = "q-filter page-number";
+                    button.textContent = pageNumber;
+                    button.title = page.name;
+
+                    if (pageNumber === currentPage) {
+                        button.classList.add("active");
+                        button.setAttribute("aria-current", "page");
+                    }
+
+                    button.addEventListener("click", function () {
+                        currentPage = pageNumber;
+                        searchInput.value = "";
+                        renderCatalog();
+                    });
+
+                    pageNumberList.appendChild(button);
+                });
+
+                previousButton.disabled = currentPage === 1;
+                nextButton.disabled =
+                    currentPage === catalogPages.length;
+            }
+
+            // Cập nhật tiêu đề, lọc theo từ khóa và vẽ danh sách sản phẩm của trang hiện tại.
+
+            function renderCatalog() {
+                const pageData = catalogPages[currentPage - 1];
+                const keyword =
+                    searchInput.value.trim().toLowerCase();
+
+                const visibleProducts = pageData.products.filter(
+                    function (product) {
+                        return product.name
+                            .toLowerCase()
+                            .includes(keyword);
+                    }
+                );
+
+                catalogTitle.textContent = pageData.title;
+                catalogDescription.textContent =
+                    pageData.description;
+                categoryName.textContent = pageData.name;
+                currentPageText.textContent = currentPage;
+
+                resultCount.textContent =
+                    "Hiển thị " +
+                    visibleProducts.length +
+                    " / " +
+                    pageData.products.length +
+                    " sản phẩm";
+
+                productGrid.innerHTML = visibleProducts
+                    .map(function (product) {
+                        return createProductCard(
+                            product,
+                            pageData.category
+                        );
+                    })
+                    .join("");
+
+                emptyResult.classList.toggle(
+                    "show",
+                    visibleProducts.length === 0
+                );
+
+                renderPageNumbers();
+            }
+
+    // localStorage giữ dữ liệu ngay trong trình duyệt để trang chi tiết đọc lại sau khi chuyển trang.
+            productGrid.addEventListener("click", function (event) {
+                const buyButton =
+                    event.target.closest(".btn-buy");
+
+                if (!buyButton) {
+                    return;
+                }
+
+                localStorage.setItem(
+                    "prod_name",
+                    buyButton.dataset.name
+                );
+                localStorage.setItem(
+                    "prod_price",
+                    buyButton.dataset.price
+                );
+                localStorage.setItem(
+                    "prod_img",
+                    buyButton.dataset.img
+                );
+                localStorage.setItem(
+                    "prod_desc",
+                    buyButton.dataset.description
+                );
+
+                /*
+                 * Ghi đè danh mục của sản phẩm vừa bấm.
+                 * Trước đây index.html không lưu prod_category nên trình duyệt
+                 * có thể dùng lại danh mục cũ, làm menu Phụ kiện Điện Thoại
+                 * bị tô đậm dù người dùng đang xem điện thoại hoặc laptop.
+                 */
+                localStorage.setItem(
+                    "prod_category",
+                    buyButton.dataset.category
+                );
+
+                localStorage.setItem(
+                    "prod_subtype",
+                    buyButton.dataset.category === "phone" ||
+                    buyButton.dataset.category === "laptop"
+                        ? buyButton.dataset.category
+                        : ""
+                );
+
+                window.location.href =
+                    "chitietsanpham.html";
+            });
+
+            previousButton.addEventListener(
+                "click",
+                function () {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        searchInput.value = "";
+                        renderCatalog();
+                    }
+                }
+            );
+
+            nextButton.addEventListener(
+                "click",
+                function () {
+                    if (currentPage < catalogPages.length) {
+                        currentPage++;
+                        searchInput.value = "";
+                        renderCatalog();
+                    }
+                }
+            );
+
+            searchInput.addEventListener(
+                "input",
+                renderCatalog
+            );
+
+            renderCatalog();
+        });
+    </script>
+</body>
+</html>
